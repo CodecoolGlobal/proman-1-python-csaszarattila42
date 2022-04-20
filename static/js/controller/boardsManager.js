@@ -40,8 +40,10 @@ async function loadStatus(boardId) {
 function showHideButtonHandler(clickEvent) {
     let boardId = clickEvent.target.dataset.boardId;
     let button = document.querySelector(`button[data-board-id="${boardId}"]`);
-    let board = document.querySelector(`div[data-board-id="${boardId}"]`)
+    let board = document.querySelector(`section[data-board-id="${boardId}"]`)
     //let boardTitle = board.querySelector("h5");
+    console.log(board)
+    console.log(board.querySelectorAll("div.card"))
     board.querySelectorAll("div.card").forEach((card)=>{
                 card.classList.toggle("hidden")});
         if (button.innerText === "Show Cards"){
