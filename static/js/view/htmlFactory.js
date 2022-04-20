@@ -21,13 +21,36 @@ export function htmlFactory(template) {
 }
 
 function boardBuilder(board) {
-    return `<div class="board-container">
-                <div class="board" data-board-id=${board.id}>${board.title}</div>
+    console.log(board)
+    let boardContainer = document.createElement("div");
+    let cardBoard = document.createElement("div");
+    let title = document.createElement("h5");
+    let button = document.createElement("button");
+    boardContainer.setAttribute("class", "board-container");
+    boardContainer.appendChild(cardBoard);
+    cardBoard.setAttribute("class","board" );
+    cardBoard.setAttribute("data-board-id",`${board.id}`);
+    cardBoard.appendChild(title);
+    title.innerText=`${board.title}`;
+    boardContainer.appendChild(button);
+    button.innerText = "Show Cards";
+    button.setAttribute("class", "toggle-board-button")
+    button.setAttribute("data-board-id", `${board.id}`)
+    return boardContainer;
+    /*return `<div class="board-container">
+                <div class="board" data-board-id=${board.id}><h5>${board.title}</h5></div>
                 <button class="toggle-board-button" data-board-id="${board.id}">Show Cards</button>
-            </div>`;
+            </div>`;*/
 }
 
 function cardBuilder(card) {
-    return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
+    let cardDom = document.createElement("div");
+    cardDom.setAttribute("class", "card");
+    cardDom.classList.add("hidden");
+    cardDom.setAttribute("data-card-id",`${card.id}`);
+    cardDom.innerText=`${card.title}`;
+    return cardDom;
+;
+    //return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
 }
 
