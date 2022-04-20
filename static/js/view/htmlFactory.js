@@ -1,11 +1,13 @@
 export const htmlTemplates = {
     board: 1,
-    card: 2
+    card: 2,
+    column:3
 }
 
 export const builderFunctions = {
     [htmlTemplates.board]: boardBuilder,
-    [htmlTemplates.card]: cardBuilder
+    [htmlTemplates.card]: cardBuilder,
+    [htmlTemplates.column]: columnBuilder
 };
 
 export function htmlFactory(template) {
@@ -19,7 +21,7 @@ export function htmlFactory(template) {
         return "";
     };
 }
-function columnBuilder(column) {
+function columnBuilder() {
     let columns = document.createElement("div");
     let colum = document.createElement("div");
     let columnTitle = document.createElement("div");
@@ -30,6 +32,7 @@ function columnBuilder(column) {
     columns.appendChild(colum);
     columns.classList.add("board-columns");
     colum.classList.add("board-column");
+    return columns
 }
 function boardBuilder(board) {
     console.log(board)

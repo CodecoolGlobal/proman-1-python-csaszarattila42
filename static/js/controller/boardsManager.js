@@ -10,6 +10,7 @@ export let boardsManager = {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
+            this.loadStatus(board.id);
             cardsManager.loadCards(board.id);
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
@@ -23,25 +24,24 @@ export let boardsManager = {
             );
         }
     },
-};
-
-
-async function loadStatus(boardId) {
+    loadStatus : async function (boardId) {
     const statuses = await dataHandler.getStatuses();
     console.log(statuses)
-
     for (let status of statuses) {
-        const statusBuilder = htmlFactory(htmlTemplates.board);
+        const statusBuilder = htmlFactory(htmlTemplates.column);
         const content = statusBuilder(status);
         domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
     }
 }
+};
+
+
+
 
 function showHideButtonHandler(clickEvent) {
     let boardId = clickEvent.target.dataset.boardId;
     let button = document.querySelector(`button[data-board-id="${boardId}"]`);
     let board = document.querySelector(`section[data-board-id="${boardId}"]`)
-    //let boardTitle = board.querySelector("h5");
     console.log(board)
     console.log(board.querySelectorAll("div.card"))
     board.querySelectorAll("div.card").forEach((card)=>{
@@ -58,7 +58,7 @@ function showHideButtonHandler(clickEvent) {
 function showStatuses(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     console.log(boardId)
-    loadStatus(boardId);
+    boardsManager.loadStatus(boardId);
 }
 
 
