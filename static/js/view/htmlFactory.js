@@ -21,6 +21,7 @@ export function htmlFactory(template) {
 }
 
 function boardBuilder(board) {
+    console.log(board)
     let boardContainer = document.createElement("div");
     let cardBoard = document.createElement("div");
     let title = document.createElement("h5");
@@ -45,6 +46,7 @@ function boardBuilder(board) {
 function cardBuilder(card) {
     let cardDom = document.createElement("div");
     cardDom.setAttribute("class", "card");
+    cardDom.classList.add("hidden");
     cardDom.setAttribute("data-card-id",`${card.id}`);
     cardDom.innerText=`${card.title}`;
     return cardDom;

@@ -2,7 +2,6 @@ export let domManager = {
     addChild(parentIdentifier, childContent) {
         const parent = document.querySelector(parentIdentifier);
         if (parent) {
-            console.log(childContent)
             parent.appendChild(childContent);
         } else {
             console.error("could not find such html element: " + parentIdentifier);

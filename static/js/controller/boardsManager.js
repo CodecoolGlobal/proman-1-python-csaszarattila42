@@ -10,6 +10,7 @@ export let boardsManager = {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
+            cardsManager.loadCards(board.id);
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click",
@@ -24,18 +25,15 @@ function showHideButtonHandler(clickEvent) {
     let boardId = clickEvent.target.dataset.boardId;
     let button = document.querySelector(`button[data-board-id="${boardId}"]`);
     let board = document.querySelector(`div[data-board-id="${boardId}"]`)
-    let boardTitle = board.querySelector("h5");
-    if (button.innerText === "Show Cards"){
-        console.log(boardTitle)
-        cardsManager.loadCards(boardId);
-        button.innerText = "Hide Cards";
-    }else{
-        let boardBuilder = htmlFactory(htmlTemplates.board)
-        console.log(board.parentNode)
-        console.log(board.parentElement)
-        domManager.replaceChild("#root",board.parentNode, boardBuilder(boardId))
-        button.innerText = "Show Cards";
-    }
+    //let boardTitle = board.querySelector("h5");
+    board.querySelectorAll("div.card").forEach((card)=>{
+                card.classList.toggle("hidden")});
+        if (button.innerText === "Show Cards"){
+            button.innerText = "Hide Cards";
 
+        }else{
+
+            button.innerText = "Show Cards";
+        }
 
 }
