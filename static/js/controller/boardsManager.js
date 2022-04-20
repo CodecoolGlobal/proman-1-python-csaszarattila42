@@ -30,9 +30,7 @@ function showHideButtonHandler(clickEvent) {
                 card.classList.toggle("hidden")});
         if (button.innerText === "Show Cards"){
             button.innerText = "Hide Cards";
-
         }else{
-
             button.innerText = "Show Cards";
         }
 
