@@ -15,11 +15,39 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler
             );
+            domManager.addEventListener(
+                `.board[data-board-id="${board.id}"]`,
+                "click",
+                showStatuses
+            );
         }
     },
 };
+
+
+async function loadStatus(boardId) {
+    const statuses = await dataHandler.getStatuses();
+    console.log(statuses)
+
+    for (let status of statuses) {
+        const statusBuilder = htmlFactory(htmlTemplates.board);
+        const content = statusBuilder(status);
+        domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
+    }
+}
 
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     cardsManager.loadCards(boardId);
 }
+
+
+function showStatuses(clickEvent) {
+    const boardId = clickEvent.target.dataset.boardId;
+    console.log(boardId)
+    loadStatus(boardId);
+}
+
+
+
+

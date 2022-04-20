@@ -16,6 +16,12 @@ def index():
     return render_template('index.html')
 
 
+@app.route("/api/statuses")
+@json_response
+def get_statuses():
+    return queries.get_statuses()
+
+
 @app.route("/api/boards")
 @json_response
 def get_boards():
@@ -33,6 +39,7 @@ def get_cards_for_board(board_id: int):
     :param board_id: id of the parent board
     """
     return queries.get_cards_for_board(board_id)
+
 
 
 def main():
