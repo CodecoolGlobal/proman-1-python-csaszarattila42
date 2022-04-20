@@ -15,6 +15,7 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler
             );
+            domManager.addEventListener(`.board[data-board-id="${board.id}"]`, "click", updateBoardName)
         }
     },
 };
@@ -22,4 +23,14 @@ export let boardsManager = {
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     cardsManager.loadCards(boardId);
+}
+
+function updateBoardName(clickEvent) {
+    const boardId = clickEvent.target.dataset.boardId;
+    let boardName = document.querySelector(`.board[data-board-id="${boardId}"]`);
+    let textBox = document.createElement('textarea');
+    boardName.parentElement.replaceChild(textBox, boardName)
+    let name = boardName.innerText;
+    textBox.innerText = name
+    boardName.innerText= ""
 }
