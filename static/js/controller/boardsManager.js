@@ -21,10 +21,21 @@ export let boardsManager = {
 
 
 function showHideButtonHandler(clickEvent) {
-    const boardId = clickEvent.target.dataset.boardId;
-    let board = document.getElementById(boardId);
-    board.innerHTML = "";
-    console.log(boardId);
-    cardsManager.loadCards(boardId);
+    let boardId = clickEvent.target.dataset.boardId;
+    let button = document.querySelector(`button[data-board-id="${boardId}"]`);
+    let board = document.querySelector(`div[data-board-id="${boardId}"]`)
+    let boardTitle = board.querySelector("h5");
+    if (button.innerText === "Show Cards"){
+        console.log(boardTitle)
+        cardsManager.loadCards(boardId);
+        button.innerText = "Hide Cards";
+    }else{
+        let boardBuilder = htmlFactory(htmlTemplates.board)
+        console.log(board.parentNode)
+        console.log(board.parentElement)
+        domManager.replaceChild("#root",board.parentNode, boardBuilder(boardId))
+        button.innerText = "Show Cards";
+    }
+
 
 }
