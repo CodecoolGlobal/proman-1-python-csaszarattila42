@@ -47,3 +47,14 @@ def get_cards_for_board(board_id):
         , {"board_id": board_id})
 
     return matching_cards
+
+
+def update_board_name(board_id, name):
+    return data_manager.execute_select(
+        """
+        UPDATE boards
+        SET title = %(name)s
+        WHERE id = %(board_id)s
+        """
+        , {"board_id": board_id, "name": name}
+    )
