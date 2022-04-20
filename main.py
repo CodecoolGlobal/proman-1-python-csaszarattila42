@@ -35,6 +35,7 @@ def create_board():
         full_query_parameters["private"] = False
 
     queries.create_board(full_query_parameters)
+    return {}, 200
 
 
 @app.route("/api/boards/<int:board_id>/cards/")
