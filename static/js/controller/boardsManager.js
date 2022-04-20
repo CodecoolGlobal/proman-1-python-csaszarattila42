@@ -15,7 +15,7 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler
             );
-            domManager.addEventListener(`.board[data-board-id="${board.id}"]`, "click", updateBoardName);
+            domManager.addEventListener(`.board[data-board-id="${board.id}"]`, "click", updateName);
 
         }
     },
@@ -26,13 +26,16 @@ function showHideButtonHandler(clickEvent) {
     cardsManager.loadCards(boardId);
 }
 
-function updateBoardName(clickEvent) {
+function updateName(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    domManager.updateBoardName(boardId);
+    domManager.updateName(boardId);
     domManager.addEventListener(`.button[data-button-id="save"]`, "click", saveNewName);
 }
 
-function saveNewName(clickEvent) {
+function saveNewName() {
     const saveButton = document.querySelector(`.button[data-button-id="save"]`);
-    saveButton.innerText = "Saved";
+    let boardId = saveButton.getAttribute("id");
+    let newName = document.getElementById("textbox");
+    dataHandler.updateName(boardId, newName.value).then(domManager.resetBoard(boardId, newName))
+        .then(dataHandler.getBoards())
 }
