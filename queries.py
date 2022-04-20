@@ -24,7 +24,7 @@ def get_boards():
     :return:
     """
     # remove this code once you implement the database
-    return [{"title": "board1", "id": 1}, {"title": "board2", "id": 2}]
+    # return [{"title": "board1", "id": 1}, {"title": "board2", "id": 2}]
 
     return data_manager.execute_select(
         """
@@ -50,7 +50,7 @@ def get_cards_for_board(board_id):
 
 
 def update_board_name(board_id, name):
-    return data_manager.execute_select(
+    update = data_manager.execute_update(
         """
         UPDATE boards
         SET title = %(name)s
@@ -58,3 +58,5 @@ def update_board_name(board_id, name):
         """
         , {"board_id": board_id, "name": name}
     )
+    return update
+
