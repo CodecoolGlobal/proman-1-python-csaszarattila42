@@ -4,7 +4,7 @@
 :root{
     --border-radius: 3px;
     --status-1: #590000;
-    --status-2: #594300;
+    --status-2: #e3ff33;
     --status-3: #525900;
     --status-4: #085900;
 }
@@ -14,6 +14,7 @@ body{
     background: #ddd url(http://cdn.backgroundhost.com/backgrounds/subtlepatterns/diagonal-noise.png);
     font-family: sans-serif;
 }
+
 
 h1, .board-title, .board-column-title{
     font-weight: 100;
@@ -96,9 +97,10 @@ section.board{
 .card{
     position: relative;
     background: #222;
-    color: #fff;
+    color: black;
     border-radius: var(--border-radius);
     margin: 4px 0;
+    width: 200px;
     padding: 4px;
 }
 
