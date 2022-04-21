@@ -27,6 +27,9 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>    </head>
     <body>
+        <div class="container" id="board-creation">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#board-creation-modal">Create new board</button>
+        </div>
         <div id="root"></div>
         <div class="modal fade" id="new-card-modal" tabindex="-1">
               <div class="modal-dialog">
@@ -45,5 +48,26 @@
                 </div>
               </div>
         </div>
+        <div class="modal fade" id="board-creation-modal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">New Board</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" id="board-creation-modal-form-container">
+                  <form>
+                      <label for="board-creation-title">Title: </label>
+                      <input type="text" id="board-creation-title"><br>
+                      <input type="checkbox" id="board-creation-private">
+                      <label for="board-creation-modal-form-container">Private</label>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="new-board-save" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+              </div>
+            </div>
+          </div>
+    </div>
     </body>
 </html>
