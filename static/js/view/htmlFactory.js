@@ -51,7 +51,7 @@ function boardBuilder(board) {
     cardBoard.appendChild(boardHeader);
     title.setAttribute("data-board-id", `${board.id}`)
     deleteButton.setAttribute("data-board-id", `${board.id}`)
-    deleteButton.innerText = "Delete";
+    deleteButton.innerText = " 🗑️ ";
     title.classList.add("board-title");
     title.innerText=`${board.title}`;
     boardContainer.appendChild(showButton);
