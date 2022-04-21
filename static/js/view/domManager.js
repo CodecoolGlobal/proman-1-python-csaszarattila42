@@ -29,7 +29,7 @@ export let domManager = {
         let name = boardName.innerText;
         textBox.innerText = name
         textBox.setAttribute('id', "textbox")
-        boardName.innerText= ""
+        boardName.innerText = ""
         let button = document.createElement('button')
         button.innerText = "Save"
         button.setAttribute('data-button-id', 'save')
@@ -39,13 +39,16 @@ export let domManager = {
     },
 
 
-
-    replaceChild(parentIdentifier,oldChild,childContent) {
+    replaceChild(parentIdentifier, oldChild, childContent) {
         const parent = document.querySelector(parentIdentifier);
         if (parent) {
-            parent.replaceChild(childContent,oldChild);
+            parent.replaceChild(childContent, oldChild);
         } else {
             console.error("could not find such html element: " + parentIdentifier);
-    }
+        }
+    },
+    refreshPage: function () {
+        document.querySelector('#root').innerHTML = '';
+        boardsManager.loadBoards();
     }
 };
