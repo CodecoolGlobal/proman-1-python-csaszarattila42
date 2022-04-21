@@ -36,6 +36,7 @@ export let boardsManager = {
     initNewItemEventHandlers: function () {
         document.querySelector("#save-new-card").addEventListener("click", saveNewCardHandler);
         document.querySelector("#new-card-modal").addEventListener("shown.bs.modal", newCardModalHandler);
+        document.querySelector("#btn-board-creation").addEventListener('click', newBoardHandler);
     }
 };
 
@@ -90,3 +91,9 @@ function saveNewName() {
         .then(() => dataHandler.getBoards());
 }
 
+function newBoardHandler(clickEvent) {
+    const boardTitle = document.querySelector("#board-creation-title").value;
+    const privateFlag = document.querySelector("#board-creation-private").value;
+
+    dataHandler.createNewBoard(boardTitle, privateFlag);
+}
