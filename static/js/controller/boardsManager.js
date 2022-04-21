@@ -95,5 +95,6 @@ function newBoardHandler(clickEvent) {
     const boardTitle = document.querySelector("#board-creation-title").value;
     const privateFlag = document.querySelector("#board-creation-private").value;
 
-    dataHandler.createNewBoard(boardTitle, privateFlag);
+    dataHandler.createNewBoard(boardTitle, privateFlag)
+        .then(() => boardsManager.loadBoards());
 }
