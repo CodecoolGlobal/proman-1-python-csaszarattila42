@@ -1,6 +1,13 @@
 import data_manager
 
 
+def get_statuses():
+    statuses = data_manager.execute_select(
+        """SELECT id, title FROM statuses"""
+    )
+    return statuses
+
+
 def get_card_status(status_id):
     """
     Find the first status matching the given id

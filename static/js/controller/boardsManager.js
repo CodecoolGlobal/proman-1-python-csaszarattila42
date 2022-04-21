@@ -10,15 +10,30 @@ export let boardsManager = {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
-            cardsManager.loadCards(board.id);
+            this.loadStatus(board.id).then(() => cardsManager.loadCards(board.id));
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click",
                 showHideButtonHandler
             );
-            domManager.addEventListener(`.board[data-board-id="${board.id}"]`, "click", updateName);
+            domManager.addEventListener(
+                `.board[data-board-id="${board.id}"]`,
+                "click",
+                showStatuses
+            );
         }
-    }, initNewItemEventHandlers: function () {
+    },
+    loadStatus: async function (boardId) {
+        const statuses = await dataHandler.getStatuses();
+        console.log(statuses)
+        for (let status of statuses) {
+            const statusBuilder = htmlFactory(htmlTemplates.column);
+            const content = statusBuilder(status, boardId);
+            domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
+        }
+            domManager.addEventListener(`.board[data-board-id="${board.id}"]`, "click", updateName);
+    }, 
+    initNewItemEventHandlers: function () {
         document.querySelector("#save-new-card").addEventListener("click", saveNewCardHandler);
         document.querySelector("#new-card-modal").addEventListener("shown.bs.modal", newCardModalHandler);
     }
@@ -27,9 +42,10 @@ export let boardsManager = {
 
 function showHideButtonHandler(clickEvent) {
     let boardId = clickEvent.target.dataset.boardId;
-    let button = document.querySelector(`.toggle-board-button[data-board-id="${boardId}"]`);
-    let board = document.querySelector(`div[data-board-id="${boardId}"]`)
-    //let boardTitle = board.querySelector("h5");
+    let button = document.querySelector(`button[data-board-id="${boardId}"]`);
+    let board = document.querySelector(`section[data-board-id="${boardId}"]`)
+    console.log(board)
+    console.log(board.querySelectorAll("div.card"))
     board.querySelectorAll("div.card").forEach((card) => {
         card.classList.toggle("hidden")
     });
@@ -42,12 +58,16 @@ function showHideButtonHandler(clickEvent) {
 }
 
 
+function showStatuses(clickEvent) {
+    const boardId = clickEvent.target.dataset.boardId;
+    console.log(boardId)
+    boardsManager.loadStatus(boardId);
+
 function saveNewCardHandler(clickEvent) {
     let boardId = clickEvent.target.dataset.boardId;
     let newCardTitle = document.querySelector('#new-card-title').value;
     dataHandler.createNewCard(newCardTitle, boardId);
 }
-
 
 function newCardModalHandler(clickEvent) {
     let saveButton = document.querySelector("#save-new-card");
@@ -67,4 +87,9 @@ function saveNewName() {
     let newName = document.getElementById("textbox");
     dataHandler.updateName(boardId, newName.value).then(domManager.resetBoard(boardId, newName))
         .then(dataHandler.getBoards())
+
 }
+
+
+
+

@@ -130,3 +130,9 @@ section.board{
 .card-title{
     padding-right: 16px;
 }
+div.board-column[data-column-title="new"]{
+    background-color: #590000;
+}
+.hidden {
+    display: none;
+}
