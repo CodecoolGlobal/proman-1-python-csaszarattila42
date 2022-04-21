@@ -36,6 +36,12 @@ def get_cards_for_board(board_id: int):
     return queries.get_cards_for_board(board_id)
 
 
+@app.route("/api/boards/<int:board_id>/cards/", methods=["POST"])
+@json_response
+def add_new_card_for_board(board_id: int):
+    queries.create_new_card_for_board(board_id, request.json["title"])
+
+    
 @app.route("/api/board/<int:board_id>", methods=["PUT"])
 @json_response
 def update_board_name(board_id):

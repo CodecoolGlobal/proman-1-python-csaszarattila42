@@ -17,26 +17,43 @@ export let boardsManager = {
                 showHideButtonHandler
             );
             domManager.addEventListener(`.board[data-board-id="${board.id}"]`, "click", updateName);
-
         }
-    },
+    }, initNewItemEventHandlers: function () {
+        document.querySelector("#save-new-card").addEventListener("click", saveNewCardHandler);
+        document.querySelector("#new-card-modal").addEventListener("shown.bs.modal", newCardModalHandler);
+    }
 };
 
 
 function showHideButtonHandler(clickEvent) {
     let boardId = clickEvent.target.dataset.boardId;
-    let button = document.querySelector(`button[data-board-id="${boardId}"]`);
+    let button = document.querySelector(`.toggle-board-button[data-board-id="${boardId}"]`);
     let board = document.querySelector(`div[data-board-id="${boardId}"]`)
     //let boardTitle = board.querySelector("h5");
-    board.querySelectorAll("div.card").forEach((card)=>{
-                card.classList.toggle("hidden")});
-        if (button.innerText === "Show Cards"){
-            button.innerText = "Hide Cards";
-        }else{
-            button.innerText = "Show Cards";
-        }
+    board.querySelectorAll("div.card").forEach((card) => {
+        card.classList.toggle("hidden")
+    });
+    if (button.innerText === "Show Cards") {
+        button.innerText = "Hide Cards";
+    } else {
+        button.innerText = "Show Cards";
+    }
 
 }
+
+
+function saveNewCardHandler(clickEvent) {
+    let boardId = clickEvent.target.dataset.boardId;
+    let newCardTitle = document.querySelector('#new-card-title').value;
+    dataHandler.createNewCard(newCardTitle, boardId);
+}
+
+
+function newCardModalHandler(clickEvent) {
+    let saveButton = document.querySelector("#save-new-card");
+    saveButton.dataset.boardId = clickEvent.relatedTarget.dataset.boardId;
+}
+
 
 function updateName(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;

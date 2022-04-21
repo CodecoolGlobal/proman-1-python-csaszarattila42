@@ -32,8 +32,6 @@ def get_boards():
 
 
 def get_cards_for_board(board_id):
-
-
     matching_cards = data_manager.execute_select(
         """
         SELECT * FROM cards
@@ -68,3 +66,9 @@ def get_board_by_id(id):
         ;
         """
     )
+
+
+def create_new_card_for_board(board_id, title):
+    new_card = """INSERT INTO cards (board_id, status_id, title, card_order)
+    VALUES (%(board_id)s, 1, %(title)s, 1)"""
+    data_manager.execute_insert(new_card, {'board_id': board_id, 'title': title})
