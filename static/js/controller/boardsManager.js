@@ -16,11 +16,7 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler
             );
-            domManager.addEventListener(
-                `.board[data-board-id="${board.id}"]`,
-                "click",
-                showStatuses
-            );
+
         }
     },
     loadStatus: async function (boardId) {
@@ -31,11 +27,18 @@ export let boardsManager = {
             const content = statusBuilder(status, boardId);
             domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
         }
-            domManager.addEventListener(`.board[data-board-id="${boardId}"]`, "click", updateName);
-    }, 
+        domManager.addEventListener(`.board-title[data-board-id="${boardId}"]`, "click", updateName);
+    },
     initNewItemEventHandlers: function () {
         document.querySelector("#save-new-card").addEventListener("click", saveNewCardHandler);
         document.querySelector("#new-card-modal").addEventListener("shown.bs.modal", newCardModalHandler);
+        document.querySelector("#new-board-save").addEventListener('click', newBoardHandler);
+
+    },
+    updateName: function (clickEvent) {
+        const boardId = clickEvent.target.getAttribute("data-board-id")
+        domManager.updateName(boardId);
+        domManager.addEventListener(`.button[data-button-id="save"]`, "click", saveNewName);
     }
 };
 
@@ -57,7 +60,6 @@ function showHideButtonHandler(clickEvent) {
 
 }
 
-
 function showStatuses(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     boardsManager.loadStatus(boardId);
@@ -76,7 +78,7 @@ function newCardModalHandler(clickEvent) {
 
 
 function updateName(clickEvent) {
-    const boardId = clickEvent.target.dataset.boardId;
+    const boardId = clickEvent.target.getAttribute("data-board-id")
     domManager.updateName(boardId);
     domManager.addEventListener(`.button[data-button-id="save"]`, "click", saveNewName);
 }
@@ -85,11 +87,19 @@ function saveNewName() {
     const saveButton = document.querySelector(`.button[data-button-id="save"]`);
     let boardId = saveButton.getAttribute("id");
     let newName = document.getElementById("textbox");
-    dataHandler.updateName(boardId, newName.value).then(domManager.resetBoard(boardId, newName))
-        .then(dataHandler.getBoards())
+    dataHandler.updateName(boardId, newName.value)
+        .then(() => domManager.resetBoard(boardId, newName))
+        .then(() => dataHandler.getBoards());
 
 }
 
+function newBoardHandler(clickEvent) {
+    const boardTitle = document.querySelector("#board-creation-title").value;
+    const privateFlag = document.querySelector("#board-creation-private").value;
 
-
-
+    dataHandler.createNewBoard(boardTitle, privateFlag)
+        .then(() => {
+            document.querySelector('#root').innerHTML = '';
+            boardsManager.loadBoards();
+        });
+}
