@@ -19,8 +19,12 @@ export let dataHandler = {
     getCard: async function (cardId) {
         // the card is retrieved and then the callback function is called with the card
     },
-    createNewBoard: async function (boardTitle) {
-        // creates new board, saves it and calls the callback function with its data
+    createNewBoard: async function (boardTitle, privateBoard, userId) {
+        if(userId === undefined) {
+            apiPost('/api/boards/', {title: boardTitle, 'private':privateBoard});
+        } else {
+            apiPost('/api/boards/', {title: boardTitle, 'private':privateBoard, user_id: userId});
+        }
     },
     createNewCard: async function (cardTitle, boardId, statusId) {
         apiPost(`/api/boards/${boardId}/cards/`, {title:cardTitle});
