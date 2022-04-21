@@ -2,7 +2,7 @@ export let domManager = {
     addChild(parentIdentifier, childContent) {
         const parent = document.querySelector(parentIdentifier);
         if (parent) {
-            parent.insertAdjacentHTML("beforeend", childContent);
+            parent.appendChild(childContent);
         } else {
             console.error("could not find such html element: " + parentIdentifier);
         }
@@ -15,6 +15,7 @@ export let domManager = {
             console.error("could not find such html element: " + parentIdentifier);
         }
     },
+
     updateName(elemId) {
         let boardName = document.querySelector(`.board[data-board-id="${elemId}"]`);
         let textDiv = document.createElement('div');
@@ -40,5 +41,13 @@ export let domManager = {
         textTitle.setAttribute("data-board-id", elemId);
         textTitle.innerText = newName.value;
         update_container.parentElement.replaceChild(textTitle, update_container);
+
+    replaceChild(parentIdentifier,oldChild,childContent) {
+        const parent = document.querySelector(parentIdentifier);
+        if (parent) {
+            parent.replaceChild(childContent,oldChild);
+        } else {
+            console.error("could not find such html element: " + parentIdentifier);
+    }
     }
 };
