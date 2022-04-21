@@ -95,3 +95,9 @@ def create_board(board_title):
         """,
         {"title": board_title}
     )
+
+
+def delete_board(board_id):
+    delete = """DELETE FROM boards WHERE id = %(board_id)s
+    """
+    data_manager.execute_delete(delete, {'board_id': board_id})
