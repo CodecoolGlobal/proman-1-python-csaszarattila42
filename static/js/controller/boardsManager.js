@@ -31,7 +31,7 @@ export let boardsManager = {
             const content = statusBuilder(status, boardId);
             domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
         }
-            domManager.addEventListener(`.board[data-board-id="${board.id}"]`, "click", updateName);
+            domManager.addEventListener(`.board[data-board-id="${boardId}"]`, "click", updateName);
     }, 
     initNewItemEventHandlers: function () {
         document.querySelector("#save-new-card").addEventListener("click", saveNewCardHandler);
@@ -62,6 +62,7 @@ function showStatuses(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     console.log(boardId)
     boardsManager.loadStatus(boardId);
+}
 
 function saveNewCardHandler(clickEvent) {
     let boardId = clickEvent.target.dataset.boardId;
@@ -88,7 +89,7 @@ function saveNewName() {
     dataHandler.updateName(boardId, newName.value).then(domManager.resetBoard(boardId, newName))
         .then(dataHandler.getBoards())
 
-}}
+}
 
 
 
