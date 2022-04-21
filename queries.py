@@ -81,11 +81,12 @@ def create_new_card_for_board(board_id, title):
     data_manager.execute_insert(new_card, {'board_id': board_id, 'title': title})
 
 
-def create_board(board_details):
+def create_board(board_title):
     data_manager.execute_insert(
         """
         INSERT INTO boards 
         (title)
-        VALUES (%(board_id)s);
-        """
+        VALUES (%(title)s);
+        """,
+        {"title": board_title}
     )
