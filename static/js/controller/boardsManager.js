@@ -102,7 +102,5 @@ function newBoardHandler(clickEvent) {
         .then(() => {
             document.querySelector('#root').innerHTML = '';
             boardsManager.loadBoards();
-
-            boardTitle.value = '';
         });
 }
