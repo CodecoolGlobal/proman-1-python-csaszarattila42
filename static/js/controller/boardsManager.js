@@ -88,7 +88,7 @@ function saveNewName() {
     dataHandler.updateName(boardId, newName.value).then(domManager.resetBoard(boardId, newName))
         .then(dataHandler.getBoards())
 
-}
+}}
 
 
 

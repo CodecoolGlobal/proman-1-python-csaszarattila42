@@ -41,7 +41,7 @@ export let domManager = {
         textTitle.setAttribute("data-board-id", elemId);
         textTitle.innerText = newName.value;
         update_container.parentElement.replaceChild(textTitle, update_container);
-
+    },
     replaceChild(parentIdentifier,oldChild,childContent) {
         const parent = document.querySelector(parentIdentifier);
         if (parent) {
