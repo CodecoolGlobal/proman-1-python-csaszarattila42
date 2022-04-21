@@ -111,10 +111,3 @@ function newBoardHandler(clickEvent) {
             domManager.refreshPage()
         });
 }
-
-
-// function refreshPage() {
-//     document.querySelector('#root').innerHTML = '';
-//     boardsManager.loadBoards();
-//
-// }
