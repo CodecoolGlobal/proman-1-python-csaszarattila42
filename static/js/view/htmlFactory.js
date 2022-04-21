@@ -41,13 +41,17 @@ function boardBuilder(board) {
     let title = document.createElement("span");
     let showButton = document.createElement("button");
     let boardHeader = document.createElement("div");
-    boardContainer.appendChild(title)
+    let deleteButton = document.createElement('button');
+    boardContainer.appendChild(title);
+    boardContainer.appendChild(deleteButton);
     boardContainer.setAttribute("class", "board-container");
     boardContainer.appendChild(cardBoard);
     cardBoard.setAttribute("class","board" );
     cardBoard.setAttribute("data-board-id",`${board.id}`);
     cardBoard.appendChild(boardHeader);
     title.setAttribute("data-board-id", `${board.id}`)
+    deleteButton.setAttribute("data-board-id", `${board.id}`)
+    deleteButton.innerText = "Delete";
     title.classList.add("board-title");
     title.innerText=`${board.title}`;
     boardContainer.appendChild(showButton);
