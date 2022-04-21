@@ -131,9 +131,10 @@ section.board{
     padding-right: 16px;
 }
 
-.hidden {
+.card.hidden{
     display: none;
 }
+
 .board-column{
     display: inline-block;
 }

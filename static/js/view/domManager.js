@@ -1,3 +1,5 @@
+import {boardsManager} from "../controller/boardsManager.js";
+
 export let domManager = {
     addChild(parentIdentifier, childContent) {
         const parent = document.querySelector(parentIdentifier);
@@ -17,7 +19,8 @@ export let domManager = {
     },
 
     updateName(elemId) {
-        let boardName = document.querySelector(`.board[data-board-id="${elemId}"]`);
+        console.log(elemId)
+        let boardName = document.querySelector(`.board-title[data-board-id="${elemId}"]`);
         let textDiv = document.createElement('div');
         let textBox = document.createElement('textarea');
         textDiv.classList.add('update-container')
@@ -36,11 +39,13 @@ export let domManager = {
     },
     resetBoard(elemId, newName) {
         let update_container = document.querySelector(".update-container");
-        let textTitle = document.createElement("div");
-        textTitle.classList.add("board");
+        let textTitle = document.createElement("span");
+        textTitle.classList.add("board-title");
         textTitle.setAttribute("data-board-id", elemId);
         textTitle.innerText = newName.value;
         update_container.parentElement.replaceChild(textTitle, update_container);
+        domManager.addEventListener(`.board-title[data-board-id="${elemId}"]`, "click", boardsManager.updateName)
+
     },
     replaceChild(parentIdentifier,oldChild,childContent) {
         const parent = document.querySelector(parentIdentifier);
