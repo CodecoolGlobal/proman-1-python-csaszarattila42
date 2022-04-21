@@ -54,8 +54,8 @@ function boardBuilder(board) {
     showButton.setAttribute("data-board-id", `${board.id}`);
     let newCardButton = createNewCardButtonBuilder(board);
     boardContainer.appendChild(newCardButton);
-    button.setAttribute("class", "toggle-board-button")
-    button.setAttribute("data-board-id", `${board.id}`)
+    //button.setAttribute("class", "toggle-board-button")
+    //button.setAttribute("data-board-id", `${board.id}`)
     return boardContainer;
     /*return `<div class="board-container">
                 <div class="board" data-board-id=${board.id}><h5>${board.title}</h5></div>
