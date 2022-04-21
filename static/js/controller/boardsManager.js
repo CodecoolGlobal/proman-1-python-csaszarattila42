@@ -10,8 +10,7 @@ export let boardsManager = {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
-            this.loadStatus(board.id);
-            cardsManager.loadCards(board.id);
+            this.loadStatus(board.id).then(() => cardsManager.loadCards(board.id));
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click",
@@ -24,18 +23,16 @@ export let boardsManager = {
             );
         }
     },
-    loadStatus : async function (boardId) {
-    const statuses = await dataHandler.getStatuses();
-    console.log(statuses)
-    for (let status of statuses) {
-        const statusBuilder = htmlFactory(htmlTemplates.column);
-        const content = statusBuilder(status);
-        domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
+    loadStatus: async function (boardId) {
+        const statuses = await dataHandler.getStatuses();
+        console.log(statuses)
+        for (let status of statuses) {
+            const statusBuilder = htmlFactory(htmlTemplates.column);
+            const content = statusBuilder(status, boardId);
+            domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
+        }
     }
-}
 };
-
-
 
 
 function showHideButtonHandler(clickEvent) {
@@ -44,13 +41,14 @@ function showHideButtonHandler(clickEvent) {
     let board = document.querySelector(`section[data-board-id="${boardId}"]`)
     console.log(board)
     console.log(board.querySelectorAll("div.card"))
-    board.querySelectorAll("div.card").forEach((card)=>{
-                card.classList.toggle("hidden")});
-        if (button.innerText === "Show Cards"){
-            button.innerText = "Hide Cards";
-        }else{
-            button.innerText = "Show Cards";
-        }
+    board.querySelectorAll("div.card").forEach((card) => {
+        card.classList.toggle("hidden")
+    });
+    if (button.innerText === "Show Cards") {
+        button.innerText = "Hide Cards";
+    } else {
+        button.innerText = "Show Cards";
+    }
 
 }
 

@@ -21,21 +21,21 @@ export function htmlFactory(template) {
         return "";
     };
 }
-function columnBuilder() {
-    let columns = document.createElement("div");
+function columnBuilder(column,boardId) {
+
     let colum = document.createElement("div");
     let columnTitle = document.createElement("div");
     let columnContent = document.createElement("div");
     colum.appendChild(columnContent);
     columnTitle.classList.add("board-column-title");
     colum.appendChild(columnTitle);
-    columns.appendChild(colum);
-    columns.classList.add("board-columns");
     colum.classList.add("board-column");
-    return columns
+    colum.setAttribute("data-column-title",`${column.title}`)
+    colum.setAttribute("data-board-id", `${boardId}`)
+    colum.innerText=`${column.title}`
+    return colum
 }
 function boardBuilder(board) {
-    console.log(board)
     let boardContainer = document.createElement("div");
     let cardBoard = document.createElement("section");
     let title = document.createElement("span");
