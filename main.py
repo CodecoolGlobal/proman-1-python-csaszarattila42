@@ -54,12 +54,15 @@ def get_cards_for_board(board_id: int):
 def add_new_card_for_board(board_id: int):
     queries.create_new_card_for_board(board_id, request.json["title"])
 
-
-@app.route("/api/board/<int:board_id>", methods=["PUT"])
+    
+@app.route("/api/board/<int:board_id>", methods=["PUT", "DELETE"])
 @json_response
 def update_board_name(board_id):
-    board_name = request.json['name']
-    queries.update_board_name(board_id, board_name)
+    if request.method == "PUT":
+        board_name = request.json['name']
+        queries.update_board_name(board_id, board_name)
+    if request.method == "DELETE":
+        queries.delete_board(board_id)
     return {}, 200
 
 
