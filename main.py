@@ -32,16 +32,10 @@ def get_boards():
     return queries.get_boards()
 
 
-@app.route("/api/boards", methods=["POST"])
+@app.route("/api/boards/", methods=["POST"])
 @json_response
 def create_board():
-    full_query_parameters = dict(request.json)
-    if session["userid"] and request.json["private"]:
-        full_query_parameters["user_id"] = session["userid"]
-    else:
-        full_query_parameters["private"] = False
-
-    queries.create_board(full_query_parameters)
+    queries.create_board(request.json["title"])
     return {}, 200
 
 
