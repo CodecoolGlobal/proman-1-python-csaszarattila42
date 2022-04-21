@@ -11,7 +11,12 @@ export let boardsManager = {
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
             cardsManager.loadCards(board.id);
-            domManager.addEventListener(`.toggle-board-button[data-board-id="${board.id}"]`, "click", showHideButtonHandler);
+            domManager.addEventListener(
+                `.toggle-board-button[data-board-id="${board.id}"]`,
+                "click",
+                showHideButtonHandler
+            );
+            domManager.addEventListener(`.board[data-board-id="${board.id}"]`, "click", updateName);
         }
     }, initNewItemEventHandlers: function () {
         document.querySelector("#save-new-card").addEventListener("click", saveNewCardHandler);
@@ -49,3 +54,17 @@ function newCardModalHandler(clickEvent) {
     saveButton.dataset.boardId = clickEvent.relatedTarget.dataset.boardId;
 }
 
+
+function updateName(clickEvent) {
+    const boardId = clickEvent.target.dataset.boardId;
+    domManager.updateName(boardId);
+    domManager.addEventListener(`.button[data-button-id="save"]`, "click", saveNewName);
+}
+
+function saveNewName() {
+    const saveButton = document.querySelector(`.button[data-button-id="save"]`);
+    let boardId = saveButton.getAttribute("id");
+    let newName = document.getElementById("textbox");
+    dataHandler.updateName(boardId, newName.value).then(domManager.resetBoard(boardId, newName))
+        .then(dataHandler.getBoards())
+}

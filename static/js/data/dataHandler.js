@@ -23,6 +23,10 @@ export let dataHandler = {
     createNewCard: async function (cardTitle, boardId, statusId) {
         apiPost(`/api/boards/${boardId}/cards/`, {title:cardTitle});
     },
+    updateName: async function (elemId, name) {
+        let data =  {'boardId': elemId, 'name': name }
+        return await apiPut(`/api/board/${elemId}`, data)
+    }
 };
 
 async function apiGet(url) {
@@ -47,7 +51,13 @@ async function apiPost(url, payload) {
 async function apiDelete(url) {
 }
 
-async function apiPut(url) {
+async function apiPut(url, data) {
+    const request = new Request(url, {body: JSON.stringify(data), method: "PUT", headers: {"Content-Type": 'application/json' }});
+    let response = await fetch(request);
+    if (response.ok) {
+        return await response.json();
+    }
+
 }
 
 async function apiPatch(url) {
