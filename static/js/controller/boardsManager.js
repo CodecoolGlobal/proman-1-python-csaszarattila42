@@ -27,18 +27,19 @@ export let boardsManager = {
             const content = statusBuilder(status, boardId);
             domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
         }
-            domManager.addEventListener(`.board-title[data-board-id="${boardId}"]`, "click", updateName);
-    }, 
+        domManager.addEventListener(`.board-title[data-board-id="${boardId}"]`, "click", updateName);
+    },
     initNewItemEventHandlers: function () {
         document.querySelector("#save-new-card").addEventListener("click", saveNewCardHandler);
         document.querySelector("#new-card-modal").addEventListener("shown.bs.modal", newCardModalHandler);
         document.querySelector("#new-board-save").addEventListener('click', newBoardHandler);
-    }
+
     },
     updateName: function (clickEvent) {
-    const boardId = clickEvent.target.getAttribute("data-board-id")
-    domManager.updateName(boardId);
-    domManager.addEventListener(`.button[data-button-id="save"]`, "click", saveNewName);}
+        const boardId = clickEvent.target.getAttribute("data-board-id")
+        domManager.updateName(boardId);
+        domManager.addEventListener(`.button[data-button-id="save"]`, "click", saveNewName);
+    }
 };
 
 
