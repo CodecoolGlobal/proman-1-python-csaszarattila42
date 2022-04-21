@@ -11,15 +11,22 @@ export let cardsManager = {
         for (let card of cards) {
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
+            content.setAttribute("data-board-id", `${boardId}`);
             column.appendChild(content);
             domManager.addEventListener(
-                `.card[data-card-id="${card.id}"]`,
+                `.bi.bi-trash[data-card-id="${card.id}"]`,
                 "click",
                 deleteButtonHandler
             );
+
         }
     },
 };
 
 function deleteButtonHandler(clickEvent) {
+    console.log("CLICK");
+    let cardId = clickEvent.target.dataset.cardId;
+    let boardId = clickEvent.target.parentElement.parentElement.dataset.boardId;
+    console.log(boardId);
+    dataHandler.deleteCard(boardId, cardId);
 }

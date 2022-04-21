@@ -28,6 +28,9 @@ export let dataHandler = {
     updateName: async function (elemId, name) {
         let data =  {'boardId': elemId, 'name': name }
         return await apiPut(`/api/board/${elemId}`, data)
+    },
+    deleteCard: async function (boardId, cardId) {
+        apiDelete(`/api/boards/${boardId}/cards/${cardId}`);
     }
 };
 
@@ -52,6 +55,13 @@ async function apiPost(url, payload) {
 }
 
 async function apiDelete(url) {
+    const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        //body: JSON.stringify(payload)
+    });
 }
 
 async function apiPut(url, data) {

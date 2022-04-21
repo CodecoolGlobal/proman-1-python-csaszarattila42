@@ -63,6 +63,12 @@ def update_board_name(board_id):
     return {}, 200
 
 
+@app.route("/api/boards/<int:board_id>/cards/<int:card_id>", methods=["DELETE"])
+@json_response
+def delete_card(board_id, card_id):
+    queries.delete_card(board_id, card_id)
+
+
 def main():
     app.run(debug=True)
 
