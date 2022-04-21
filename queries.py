@@ -1,6 +1,13 @@
 import data_manager
 
 
+def get_statuses():
+    statuses = data_manager.execute_select(
+        """SELECT id, title FROM statuses"""
+    )
+    return statuses
+
+
 def get_card_status(status_id):
     """
     Find the first status matching the given id
@@ -23,9 +30,6 @@ def get_boards():
     Gather all boards
     :return:
     """
-    # remove this code once you implement the database
-    return [{"title": "board1", "id": 1}, {"title": "board2", "id": 2}]
-
     return data_manager.execute_select(
         """
         SELECT * FROM boards
@@ -35,9 +39,6 @@ def get_boards():
 
 
 def get_cards_for_board(board_id):
-    # remove this code once you implement the database
-    return [{"title": "title1", "id": 1}, {"title": "board2", "id": 2}]
-
     matching_cards = data_manager.execute_select(
         """
         SELECT * FROM cards
@@ -47,6 +48,37 @@ def get_cards_for_board(board_id):
         , {"board_id": board_id})
 
     return matching_cards
+
+
+def update_board_name(board_id, name):
+    update = data_manager.execute_update(
+        """
+        UPDATE boards
+        SET title = %(name)s
+        WHERE id = %(board_id)s
+        """
+        , {"board_id": board_id, "name": name}
+    )
+    return update
+
+def get_board_by_id(id):
+    """
+    Gather all boards
+    :return:
+    """
+    return data_manager.execute_select(
+        """
+        SELECT * FROM boards
+        WHERE boards.id = %(id)s
+        ;
+        """
+    )
+
+
+def create_new_card_for_board(board_id, title):
+    new_card = """INSERT INTO cards (board_id, status_id, title, card_order)
+    VALUES (%(board_id)s, 1, %(title)s, 1)"""
+    data_manager.execute_insert(new_card, {'board_id': board_id, 'title': title})
 
 
 def create_board(board_details):

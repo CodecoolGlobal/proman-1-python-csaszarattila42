@@ -41,7 +41,7 @@ CREATE TABLE cards (
     board_id    INTEGER             NOT NULL,
     status_id   INTEGER             NOT NULL,
     title       VARCHAR (200)       NOT NULL,
-    card_order  INTEGER             NOT NULL
+    card_order  INTEGER            NOT NULL
 );
 
 ---
@@ -56,12 +56,12 @@ INSERT INTO statuses(title) VALUES ('done');
 INSERT INTO boards(title) VALUES ('Board 1');
 INSERT INTO boards(title) VALUES ('Board 2');
 
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'new card 1', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'new card 2', 2);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 2, 'in progress card', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 3, 'planning', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done card 1', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done card 1', 2);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'card 1', 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'card 2', 2);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 2, 'in progress', 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 3, 'plan', 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done 1', 1);
+INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done 1', 2);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 1, 'new card 1', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 1, 'new card 2', 2);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 2, 'in progress card', 1);
