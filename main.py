@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, session
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
@@ -37,7 +37,7 @@ def get_boards():
 def create_board():
     full_query_parameters = dict(request.json)
     if session["userid"] and request.json["private"]:
-        full_query_parameters["userid"] = session["userid"]
+        full_query_parameters["user_id"] = session["userid"]
     else:
         full_query_parameters["private"] = False
 
