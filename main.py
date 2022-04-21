@@ -61,9 +61,10 @@ def update_board_name(board_id):
     if request.method == "PUT":
         board_name = request.json['name']
         queries.update_board_name(board_id, board_name)
+        return {}, 200
     if request.method == "DELETE":
         queries.delete_board(board_id)
-    return {}, 200
+        return {}, 200
 
 
 @app.route("/api/boards/<int:board_id>/cards/<int:card_id>", methods=["DELETE"])
