@@ -57,7 +57,6 @@ function showHideButtonHandler(clickEvent) {
 
 }
 
-
 function showStatuses(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     console.log(boardId)
@@ -86,11 +85,8 @@ function saveNewName() {
     const saveButton = document.querySelector(`.button[data-button-id="save"]`);
     let boardId = saveButton.getAttribute("id");
     let newName = document.getElementById("textbox");
-    dataHandler.updateName(boardId, newName.value).then(domManager.resetBoard(boardId, newName))
-        .then(dataHandler.getBoards())
-
+    dataHandler.updateName(boardId, newName.value)
+        .then(() => domManager.resetBoard(boardId, newName))
+        .then(() => dataHandler.getBoards());
 }
-
-
-
 
