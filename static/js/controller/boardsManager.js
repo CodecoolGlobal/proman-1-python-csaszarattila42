@@ -41,11 +41,6 @@ export let boardsManager = {
         domManager.updateName(boardId);
         domManager.addEventListener(`.button[data-button-id="save"]`, "click", saveNewName);
     }
-    // refreshPage: function () {
-    // document.querySelector('#root').innerHTML = '';
-    // boardsManager.loadBoards();
-
-
 };
 
 
