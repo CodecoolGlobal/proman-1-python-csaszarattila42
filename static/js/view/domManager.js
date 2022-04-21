@@ -37,16 +37,9 @@ export let domManager = {
         button.classList.add('button')
         textDiv.appendChild(button)
     },
-    resetBoard(elemId, newName) {
-        let update_container = document.querySelector(".update-container");
-        let textTitle = document.createElement("span");
-        textTitle.classList.add("board-title");
-        textTitle.setAttribute("data-board-id", elemId);
-        textTitle.innerText = newName.value;
-        update_container.parentElement.replaceChild(textTitle, update_container);
-        domManager.addEventListener(`.board-title[data-board-id="${elemId}"]`, "click", boardsManager.updateName)
 
-    },
+
+
     replaceChild(parentIdentifier,oldChild,childContent) {
         const parent = document.querySelector(parentIdentifier);
         if (parent) {

@@ -27,8 +27,8 @@ export let boardsManager = {
             const content = statusBuilder(status, boardId);
             domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
         }
-            domManager.addEventListener(`.board-title[data-board-id="${boardId}"]`, "click", updateName);
-            domManager.addEventListener(`button[board-id="${boardId}"]`, "click", deleteBoard);
+        domManager.addEventListener(`.board-title[data-board-id="${boardId}"]`, "click", updateName);
+        domManager.addEventListener(`button[board-id="${boardId}"]`, "click", deleteBoard);
     },
     initNewItemEventHandlers: function () {
         document.querySelector("#save-new-card").addEventListener("click", saveNewCardHandler);
@@ -90,7 +90,7 @@ function saveNewName() {
     const saveButton = document.querySelector(`.button[data-button-id="save"]`);
     let boardId = saveButton.getAttribute("id");
     let newName = document.getElementById("textbox");
-    dataHandler.updateName(boardId, newName.value).then(() => domManager.resetBoard(boardId, newName))
+    dataHandler.updateName(boardId, newName.value).then(() => {refreshPage()})
 
 
 }
@@ -98,6 +98,8 @@ function saveNewName() {
 function deleteBoard(clickEvent) {
     const boardId = clickEvent.target.getAttribute("board-id")
     dataHandler.deleteBoardById(boardId)
+        .then(() => {refreshPage()
+        });
     console.log(boardId)
 }
 
@@ -107,7 +109,13 @@ function newBoardHandler(clickEvent) {
 
     dataHandler.createNewBoard(boardTitle, privateFlag)
         .then(() => {
-            document.querySelector('#root').innerHTML = '';
-            boardsManager.loadBoards();
+            refreshPage()
         });
+}
+
+
+function refreshPage() {
+    document.querySelector('#root').innerHTML = '';
+    boardsManager.loadBoards();
+
 }
