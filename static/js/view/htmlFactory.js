@@ -41,10 +41,6 @@ function boardBuilder(board) {
     let title = document.createElement("span");
     let showButton = document.createElement("button");
     let boardHeader = document.createElement("div");
-    let addBoard = document.createElement("button");
-    addBoard.classList.add("board-add");
-    addBoard.innerText = "Add Card";
-    boardHeader.appendChild(addBoard);
     boardContainer.setAttribute("class", "board-container");
     boardContainer.appendChild(cardBoard);
     cardBoard.setAttribute("class","board" );
@@ -56,6 +52,10 @@ function boardBuilder(board) {
     showButton.innerText = "Show Cards";
     showButton.setAttribute("class", "toggle-board-button");
     showButton.setAttribute("data-board-id", `${board.id}`);
+    let newCardButton = createNewCardButtonBuilder(board);
+    boardContainer.appendChild(newCardButton);
+    button.setAttribute("class", "toggle-board-button")
+    button.setAttribute("data-board-id", `${board.id}`)
     return boardContainer;
     /*return `<div class="board-container">
                 <div class="board" data-board-id=${board.id}><h5>${board.title}</h5></div>
@@ -76,5 +76,16 @@ function cardBuilder(card) {
     return cardDom;
 ;
     //return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
+}
+
+
+function createNewCardButtonBuilder(board) {
+    let newCardButton = document.createElement("button")
+    newCardButton.setAttribute("class", "btn btn-primary");
+    newCardButton.setAttribute("data-board-id",`${board.id}`);
+    newCardButton.setAttribute("data-bs-toggle","modal");
+    newCardButton.setAttribute("data-bs-target","#new-card-modal");
+    newCardButton.innerText = "Create Card"
+    return newCardButton;
 }
 

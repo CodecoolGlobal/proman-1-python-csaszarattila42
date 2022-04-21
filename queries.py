@@ -39,8 +39,6 @@ def get_boards():
 
 
 def get_cards_for_board(board_id):
-
-
     matching_cards = data_manager.execute_select(
         """
         SELECT * FROM cards
@@ -50,6 +48,18 @@ def get_cards_for_board(board_id):
         , {"board_id": board_id})
 
     return matching_cards
+
+
+def update_board_name(board_id, name):
+    update = data_manager.execute_update(
+        """
+        UPDATE boards
+        SET title = %(name)s
+        WHERE id = %(board_id)s
+        """
+        , {"board_id": board_id, "name": name}
+    )
+    return update
 
 def get_board_by_id(id):
     """
@@ -63,3 +73,9 @@ def get_board_by_id(id):
         ;
         """
     )
+
+
+def create_new_card_for_board(board_id, title):
+    new_card = """INSERT INTO cards (board_id, status_id, title, card_order)
+    VALUES (%(board_id)s, 1, %(title)s, 1)"""
+    data_manager.execute_insert(new_card, {'board_id': board_id, 'title': title})
