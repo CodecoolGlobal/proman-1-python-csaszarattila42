@@ -23,7 +23,7 @@ export let boardsManager = {
 
 function showHideButtonHandler(clickEvent) {
     let boardId = clickEvent.target.dataset.boardId;
-    let button = document.querySelector(`button[data-board-id="${boardId}"]`);
+    let button = document.querySelector(`.toggle-board-button[data-board-id="${boardId}"]`);
     let board = document.querySelector(`div[data-board-id="${boardId}"]`)
     //let boardTitle = board.querySelector("h5");
     board.querySelectorAll("div.card").forEach((card)=>{
@@ -33,6 +33,14 @@ function showHideButtonHandler(clickEvent) {
         }else{
             button.innerText = "Show Cards";
         }
+
+}
+
+
+function saveNewCardHandler(clickEvent){
+    let boardId = clickEvent.relatedTarget.dataset.boardId;
+    let newCardTitle = document.getElementById('new-card-title').value();
+
 
 }
 

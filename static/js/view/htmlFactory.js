@@ -34,6 +34,8 @@ function boardBuilder(board) {
     title.innerText=`${board.title}`;
     boardContainer.appendChild(button);
     button.innerText = "Show Cards";
+    let newCardButton = createNewCardButtonBuilder(board);
+    boardContainer.appendChild(newCardButton);
     button.setAttribute("class", "toggle-board-button")
     button.setAttribute("data-board-id", `${board.id}`)
     return boardContainer;
@@ -52,5 +54,16 @@ function cardBuilder(card) {
     return cardDom;
 ;
     //return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
+}
+
+
+function createNewCardButtonBuilder(board) {
+    let newCardButton = document.createElement("button")
+    newCardButton.setAttribute("class", "btn btn-primary");
+    newCardButton.setAttribute("data-board-id",`${board.id}`);
+    newCardButton.setAttribute("data-bs-toggle","modal");
+    newCardButton.setAttribute("data-bs-target","#new-card-modal");
+    newCardButton.innerText = "Create Card"
+    return newCardButton;
 }
 
