@@ -60,7 +60,6 @@ function showHideButtonHandler(clickEvent) {
 
 function showStatuses(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    console.log(boardId)
     boardsManager.loadStatus(boardId);
 }
 

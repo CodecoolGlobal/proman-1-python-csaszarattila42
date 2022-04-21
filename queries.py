@@ -79,3 +79,8 @@ def create_new_card_for_board(board_id, title):
     new_card = """INSERT INTO cards (board_id, status_id, title, card_order)
     VALUES (%(board_id)s, 1, %(title)s, 1)"""
     data_manager.execute_insert(new_card, {'board_id': board_id, 'title': title})
+
+
+def delete_card(board_id, id):
+    query = """DELETE FROM cards WHERE id = %(id)s AND board_id = %(board_id)s"""
+    data_manager.execute_delete(query, {'id': id, 'board_id': board_id})

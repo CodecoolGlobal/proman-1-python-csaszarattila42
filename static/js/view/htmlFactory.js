@@ -68,13 +68,16 @@ function cardBuilder(card) {
     let cardRemove = document.createElement("div");
     let trash = document.createElement("i")
     cardRemove.classList.add("card-remove")
-    trash.setAttribute("class", "fas fa-trash-alt")
+    trash.setAttribute("class", "bi bi-trash");
+    trash.setAttribute("data-card-id",`${card.id}`);
+    cardRemove.appendChild(trash);
     cardDom.setAttribute("class", "card");
     cardDom.classList.add("hidden");
     cardDom.setAttribute("data-card-id",`${card.id}`);
     cardDom.innerText=`${card.title}`;
+    cardDom.appendChild(cardRemove)
     return cardDom;
-;
+
     //return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
 }
 
