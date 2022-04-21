@@ -44,6 +44,18 @@ def get_cards_for_board(board_id):
 
     return matching_cards
 
+
+def update_board_name(board_id, name):
+    update = data_manager.execute_update(
+        """
+        UPDATE boards
+        SET title = %(name)s
+        WHERE id = %(board_id)s
+        """
+        , {"board_id": board_id, "name": name}
+    )
+    return update
+
 def get_board_by_id(id):
     """
     Gather all boards

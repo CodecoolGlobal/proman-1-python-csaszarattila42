@@ -16,6 +16,8 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler
             );
+            domManager.addEventListener(`.board[data-board-id="${board.id}"]`, "click", updateName);
+
         }
     },
 };
@@ -34,4 +36,18 @@ function showHideButtonHandler(clickEvent) {
             button.innerText = "Show Cards";
         }
 
+}
+
+function updateName(clickEvent) {
+    const boardId = clickEvent.target.dataset.boardId;
+    domManager.updateName(boardId);
+    domManager.addEventListener(`.button[data-button-id="save"]`, "click", saveNewName);
+}
+
+function saveNewName() {
+    const saveButton = document.querySelector(`.button[data-button-id="save"]`);
+    let boardId = saveButton.getAttribute("id");
+    let newName = document.getElementById("textbox");
+    dataHandler.updateName(boardId, newName.value).then(domManager.resetBoard(boardId, newName))
+        .then(dataHandler.getBoards())
 }
