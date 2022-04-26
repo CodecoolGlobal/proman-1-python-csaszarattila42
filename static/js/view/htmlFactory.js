@@ -32,6 +32,13 @@ const htmlElementBuilderProto = {
     }
 }
 
+export function HtmlBuilder(tagName) {
+    return Object.create(
+        htmlElementBuilderProto,
+        {element: document.createElement(tagName)}
+    );
+}
+
 
 export function htmlFactory(template) {
     if (builderFunctions.hasOwnProperty(template)) {
