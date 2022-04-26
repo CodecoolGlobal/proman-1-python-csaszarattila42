@@ -10,6 +10,29 @@ export const builderFunctions = {
     [htmlTemplates.column]: columnBuilder
 };
 
+const htmlElementBuilderProto = {
+    addClasses: function (classes) {
+        classes.split(" ").forEach(cssClass => this.element.classList.add(cssClass));
+        return this;
+    },
+    addDataAttribute: function (attributeName, attributeValue) {
+        this.element.dataset[attributeName] = attributeValue;
+        return this;
+    },
+    addChild: function (child) {
+        if (child.hasOwnProperty('getActualElement')) {
+            this.element.appendChild(child.getActualElement());
+        } else {
+            this.appendChild(child);
+        }
+        return this;
+    },
+    getActualElement: function () {
+        return this.element;
+    }
+}
+
+
 export function htmlFactory(template) {
     if (builderFunctions.hasOwnProperty(template)) {
         return builderFunctions[template];
