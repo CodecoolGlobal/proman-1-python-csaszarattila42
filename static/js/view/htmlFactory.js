@@ -43,8 +43,8 @@ class HtmlBuilder {
     }
 
     addChild(child) {
-        if (child.hasOwnProperty('getActualElement')) {
-            this.element.appendChild(child.getActualElement());
+        if (child.hasOwnProperty('element')) {
+            this.element.appendChild(child.element);
         } else {
             this.element.appendChild(child);
         }
