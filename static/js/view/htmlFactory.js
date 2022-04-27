@@ -22,8 +22,11 @@ class HtmlBuilder {
         return this;
     }
 
-    addDataAttribute(attributeName, attributeValue) {
-        this.element.dataset[attributeName] = attributeValue;
+    addDataAttributes(attributes) {
+        for (let [attributeName, attributeValue] of Object.entries(attributes)) {
+            this.element.dataset[attributeName] = attributeValue;
+        }
+
         return this;
     }
 
