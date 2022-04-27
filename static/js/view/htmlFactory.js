@@ -10,47 +10,37 @@ export const builderFunctions = {
     [htmlTemplates.column]: columnBuilder
 };
 
-const htmlElementBuilderProto = {
-    addClasses: function (classes) {
+class HtmlBuilder {
+    #element;
+
+    constructor(tagName) {
+        this.#element = document.createElement(tagName);
+    }
+
+    addClasses(classes) {
         classes.split(" ").forEach(cssClass => this.element.classList.add(cssClass));
         return this;
-    },
-    addDataAttribute: function (attributeName, attributeValue) {
+    }
+
+    addDataAttribute(attributeName, attributeValue) {
         this.element.dataset[attributeName] = attributeValue;
         return this;
-    },
-    addChild: function (child) {
+    }
+
+    addChild(child) {
         if (child.hasOwnProperty('getActualElement')) {
             this.element.appendChild(child.getActualElement());
         } else {
-            this.appendChild(child);
+            this.element.appendChild(child);
         }
         return this;
-    },
-    getActualElement: function () {
-        return this.element;
+    }
+
+    get element() {
+        return this.#element;
     }
 }
 
-export function HtmlBuilder(tagName) {
-    return Object.create(
-        htmlElementBuilderProto,
-        {element: document.createElement(tagName)}
-    );
-}
-
-
-export function htmlFactory(template) {
-    if (builderFunctions.hasOwnProperty(template)) {
-        return builderFunctions[template];
-    }
-
-    console.error("Undefined template: " + template);
-
-    return () => {
-        return "";
-    };
-}
 function columnBuilder(column,boardId) {
 
     let colum = document.createElement("div");
