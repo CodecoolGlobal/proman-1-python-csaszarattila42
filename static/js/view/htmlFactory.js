@@ -10,6 +10,18 @@ export const builderFunctions = {
     [htmlTemplates.column]: columnBuilder
 };
 
+export function htmlFactory(template) {
+    if (builderFunctions.hasOwnProperty(template)) {
+        return builderFunctions[template];
+    }
+
+    console.error("Undefined template: " + template);
+
+    return () => {
+        return "";
+    };
+}
+
 class HtmlBuilder {
     #element;
 
