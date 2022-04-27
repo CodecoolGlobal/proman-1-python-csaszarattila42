@@ -51,6 +51,11 @@ class HtmlBuilder {
         return this;
     }
 
+    addText(text) {
+        this.addChild(document.createTextNode(text));
+        return this;
+    }
+
     get element() {
         return this.#element;
     }
