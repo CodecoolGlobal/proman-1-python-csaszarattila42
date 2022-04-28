@@ -62,19 +62,20 @@ class HtmlBuilder {
 }
 
 function columnBuilder(column,boardId) {
-
-    let colum = document.createElement("div");
-    let columnTitle = document.createElement("div");
-    let columnContent = document.createElement("div");
-    colum.appendChild(columnContent);
-    columnTitle.classList.add("board-column-title");
-    colum.appendChild(columnTitle);
-    colum.classList.add("board-column");
-    colum.setAttribute("data-column-title",`${column.title}`)
-    colum.setAttribute("data-board-id", `${boardId}`)
-    colum.innerText=`${column.title}`
-    return colum
+    return new HtmlBuilder('div')
+        .addClasses("board-column")
+        .addDataAttributes({
+            "columnTitle": `${column.title}`,
+            "boardId": `${boardId}`
+        })
+        .addText(`${column.title}`)
+        .addChild(document.createElement("div"))
+        .addChild(new HtmlBuilder('div')
+            .addClasses("board-column-title")
+        )
+        .element
 }
+
 function boardBuilder(board) {
     let boardContainer = document.createElement("div");
     let cardBoard = document.createElement("section");
