@@ -103,20 +103,18 @@ function boardBuilder(board) {
 }
 
 function cardBuilder(card) {
-    let cardDom = document.createElement("div");
-    let cardRemove = document.createElement("div");
-    let trash = document.createElement("i")
-    cardRemove.classList.add("card-remove")
-    trash.setAttribute("class", "bi bi-trash");
-    trash.setAttribute("data-card-id",`${card.id}`);
-    cardRemove.appendChild(trash);
-    cardDom.setAttribute("class", "card");
-    cardDom.classList.add("hidden");
-    cardDom.setAttribute("data-card-id",`${card.id}`);
-    cardDom.innerText=`${card.title}`;
-    cardDom.appendChild(cardRemove)
-    return cardDom;
-    //return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
+    return new HtmlElementBuilder("div")
+        .addClasses("card hidden")
+        .addDataAttributes({cardId: `${card.id}`})
+        .addText(`${card.title}`)
+        .addChild(new HtmlElementBuilder("div")
+            .addClasses("card-remove")
+            .addChild(new HtmlElementBuilder("i")
+                .addClasses("bi bi-trash")
+                .addDataAttributes({cardId: `${card.id}`})
+            ) //trash
+        ) //card remove
+        .element
 }
 
 
