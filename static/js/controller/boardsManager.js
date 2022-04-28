@@ -28,7 +28,7 @@ export let boardsManager = {
             domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
         }
         domManager.addEventListener(`.board-title[data-board-id="${boardId}"]`, "click", boardsManager.updateName);
-        domManager.addEventListener(`button[board-id="${boardId}"]`, "click", deleteBoard);
+        domManager.addEventListener(`button[data-board-id="${boardId}"]`, "click", deleteBoard);
     },
     initNewItemEventHandlers: function () {
         document.querySelector("#save-new-card").addEventListener("click", saveNewCardHandler);
@@ -46,7 +46,7 @@ export let boardsManager = {
 
 function showHideButtonHandler(clickEvent) {
     let boardId = clickEvent.target.dataset.boardId;
-    let button = document.querySelector(`button[data-board-id="${boardId}"]`);
+    let button = document.querySelector(`.toggle-board-button[data-board-id="${boardId}"]`);
     let board = document.querySelector(`section[data-board-id="${boardId}"]`)
     console.log(board)
     console.log(board.querySelectorAll("div.card"))
@@ -90,7 +90,7 @@ function saveNewName() {
 }
 
 function deleteBoard(clickEvent) {
-    const boardId = clickEvent.target.getAttribute("board-id")
+    const boardId = clickEvent.target.dataset.boardId;
     dataHandler.deleteBoardById(boardId)
         .then(() => {domManager.refreshPage()
         });
