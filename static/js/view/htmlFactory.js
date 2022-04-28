@@ -22,7 +22,7 @@ export function htmlFactory(template) {
     };
 }
 
-class HtmlElementBuilder {
+export class HtmlElementBuilder {
     #element;
 
     constructor(tagName) {
