@@ -119,12 +119,14 @@ function cardBuilder(card) {
 
 
 function createNewCardButtonBuilder(board) {
-    let newCardButton = document.createElement("button")
-    newCardButton.setAttribute("class", "btn btn-primary");
-    newCardButton.setAttribute("data-board-id",`${board.id}`);
-    newCardButton.setAttribute("data-bs-toggle","modal");
-    newCardButton.setAttribute("data-bs-target","#new-card-modal");
-    newCardButton.innerText = "Create Card"
-    return newCardButton;
+    return new HtmlElementBuilder("button")
+        .addClasses("btn btn-primary")
+        .addDataAttributes({
+            boardId: `${board.id}`,
+            bsToggle: "modal",
+            bsTarget: "#new-card-modal"
+        })
+        .addText("Create Card")
+        .element
 }
 
