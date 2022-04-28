@@ -98,7 +98,15 @@ function boardBuilder(board) {
             .addDataAttributes({boardId: `${board.id}`})
             .addText("Show Cards")
         ) //show button
-        .addChild(createNewCardButtonBuilder(board))
+        .addChild(new HtmlElementBuilder("button")
+            .addClasses("btn btn-primary")
+            .addDataAttributes({
+                boardId: `${board.id}`,
+                bsToggle: "modal",
+                bsTarget: "#new-card-modal"
+            })
+            .addText("Create Card")
+        ) //new card button
         .element
 }
 
@@ -116,17 +124,3 @@ function cardBuilder(card) {
         ) //card remove
         .element
 }
-
-
-function createNewCardButtonBuilder(board) {
-    return new HtmlElementBuilder("button")
-        .addClasses("btn btn-primary")
-        .addDataAttributes({
-            boardId: `${board.id}`,
-            bsToggle: "modal",
-            bsTarget: "#new-card-modal"
-        })
-        .addText("Create Card")
-        .element
-}
-
