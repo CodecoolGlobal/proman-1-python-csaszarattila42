@@ -42,6 +42,11 @@ class HtmlElementBuilder {
         return this;
     }
 
+    addAttribute(attributeName, attributeValue) {
+        this.element.setAttribute(attributeName, attributeValue);
+        return this;
+    }
+
     addChild(child) {
         if (child instanceof HtmlElementBuilder) {
             this.element.appendChild(child.element);
