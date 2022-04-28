@@ -77,38 +77,29 @@ function columnBuilder(column,boardId) {
 }
 
 function boardBuilder(board) {
-    let boardContainer = document.createElement("div");
-    let cardBoard = document.createElement("section");
-    let title = document.createElement("span");
-    let showButton = document.createElement("button");
-    let boardHeader = document.createElement("div");
-    let deleteButton = document.createElement('button');
-    boardContainer.appendChild(title);
-    boardContainer.appendChild(deleteButton);
-    boardContainer.setAttribute("class", "board-container");
-    boardContainer.appendChild(cardBoard);
-    cardBoard.setAttribute("class","board" );
-    cardBoard.setAttribute("data-board-id",`${board.id}`);
-    cardBoard.appendChild(boardHeader);
-    title.setAttribute("data-board-id", `${board.id}`)
-    deleteButton.setAttribute("board-id", `${board.id}`)
-    deleteButton.innerText = " 🗑️ ";
-    title.classList.add("board-title");
-    title.innerText=`${board.title}`;
-    boardContainer.appendChild(showButton);
-    showButton.innerText = "Show Cards";
-    showButton.setAttribute("class", "toggle-board-button");
-    showButton.setAttribute("data-board-id", `${board.id}`);
-    let newCardButton = createNewCardButtonBuilder(board);
-
-    boardContainer.appendChild(newCardButton);
-    //button.setAttribute("class", "toggle-board-button")
-    //button.setAttribute("data-board-id", `${board.id}`)
-    return boardContainer;
-    /*return `<div class="board-container">
-                <div class="board" data-board-id=${board.id}><h5>${board.title}</h5></div>
-                <button class="toggle-board-button" data-board-id="${board.id}">Show Cards</button>
-            </div>`;*/
+    return new HtmlElementBuilder("div")
+        .addClasses("board-container")
+        .addChild(new HtmlElementBuilder("span")
+            .addClasses("board-title")
+            .addDataAttributes({boardId: `${board.id}`})
+            .addText(`${board.title}`)
+        ) //title
+        .addChild(new HtmlElementBuilder("button")
+            .addDataAttributes({boardId: `${board.id}`})
+            .addText(" 🗑️ ")
+        ) //delete button
+        .addChild(new HtmlElementBuilder("section")
+            .addClasses("board")
+            .addDataAttributes({boardId: `${board.id}`})
+            .addChild(document.createElement("div")) //board header
+        ) //card board
+        .addChild(new HtmlElementBuilder("button")
+            .addClasses("toggle-board-button")
+            .addDataAttributes({boardId: `${board.id}`})
+            .addText("Show Cards")
+        ) //show button
+        .addChild(createNewCardButtonBuilder(board))
+        .element
 }
 
 function cardBuilder(card) {
