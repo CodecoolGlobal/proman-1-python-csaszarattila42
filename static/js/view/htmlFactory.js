@@ -22,7 +22,7 @@ export function htmlFactory(template) {
     };
 }
 
-class HtmlBuilder {
+class HtmlElementBuilder {
     #element;
 
     constructor(tagName) {
@@ -43,7 +43,7 @@ class HtmlBuilder {
     }
 
     addChild(child) {
-        if (child instanceof HtmlBuilder) {
+        if (child instanceof HtmlElementBuilder) {
             this.element.appendChild(child.element);
         } else {
             this.element.appendChild(child);
@@ -62,7 +62,7 @@ class HtmlBuilder {
 }
 
 function columnBuilder(column,boardId) {
-    return new HtmlBuilder('div')
+    return new HtmlElementBuilder('div')
         .addClasses("board-column")
         .addDataAttributes({
             "columnTitle": `${column.title}`,
@@ -70,7 +70,7 @@ function columnBuilder(column,boardId) {
         })
         .addText(`${column.title}`)
         .addChild(document.createElement("div"))
-        .addChild(new HtmlBuilder('div')
+        .addChild(new HtmlElementBuilder('div')
             .addClasses("board-column-title")
         )
         .element
