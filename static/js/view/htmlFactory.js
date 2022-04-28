@@ -35,7 +35,7 @@ class HtmlBuilder {
     }
 
     addDataAttributes(attributes) {
-        for (let [attributeName, attributeValue] of Object.entries(attributes)) {
+        for (const [attributeName, attributeValue] of Object.entries(attributes)) {
             this.element.dataset[attributeName] = attributeValue;
         }
 
@@ -43,7 +43,7 @@ class HtmlBuilder {
     }
 
     addChild(child) {
-        if (child.hasOwnProperty('element')) {
+        if (child instanceof HtmlBuilder) {
             this.element.appendChild(child.element);
         } else {
             this.element.appendChild(child);
