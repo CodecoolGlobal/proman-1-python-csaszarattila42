@@ -128,4 +128,5 @@ def get_password_hash(user_id):
     WHERE
         u.id = %(user_id)s
     """
-    return data_manager.execute_select(query, {'user_id': user_id}, False)
+    password_view = data_manager.execute_select(query, {'user_id': user_id}, False)["password_hash"]
+    return bytes(password_view)
