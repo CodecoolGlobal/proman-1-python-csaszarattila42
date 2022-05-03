@@ -73,5 +73,14 @@ export let domManager = {
     refreshPage: function () {
         document.querySelector('#root').innerHTML = '';
         boardsManager.loadBoards();
+    },
+    loadingStart: function() {
+        const elem = document.createElement('div');
+        elem.id = "loading";
+        elem.innerText = 'loading...';
+        document.body.append(elem);
+    },
+    loadingEnd: function() {
+        document.getElementById('loading')?.remove?.();
     }
 };
