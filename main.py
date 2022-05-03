@@ -82,6 +82,13 @@ def delete_card(board_id, card_id):
     queries.delete_card(board_id, card_id)
 
 
+@app.route("/api/cards/<int:card_id>", methods=["PUT"])
+@json_response
+def update_card(card_id):
+    body = request.get_json()
+    body['id'] = card_id
+    queries.update_card(body)
+
 def main():
     app.run(debug=True)
 
