@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, request, session
 import bcrypt
+import os
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
@@ -7,6 +8,7 @@ import queries
 
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
+app.secret_key = os.urandom(16)
 load_dotenv()
 
 
