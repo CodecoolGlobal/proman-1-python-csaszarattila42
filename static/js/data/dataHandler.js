@@ -36,8 +36,19 @@ export let dataHandler = {
         return await apiDelete(`/api/board/${elemId}`)
     },
     updateColumnName: async function (elemId, name) {
-    let data =  {'columnId': elemId, 'title': name }
-    return await apiPut(`/api/statuses/${elemId}`, data)
+        let data =  {'columnId': elemId, 'title': name }
+        return await apiPut(`/api/statuses/${elemId}`, data)
+    },
+    updateCard: async function(cardId, card) {
+        const data = {
+            board_id: card.board_id,
+            status_id: card.status_id,
+            card_order: card.card_order,
+            title: card.title,
+            id: cardId,
+        };
+
+        return apiPut(`/api/cards/${cardId}`, data);
     }
 };
 
