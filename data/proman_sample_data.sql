@@ -20,6 +20,7 @@ SET default_with_oids = false;
 DROP TABLE IF EXISTS statuses CASCADE;
 DROP TABLE IF EXISTS boards CASCADE;
 DROP TABLE IF EXISTS cards;
+DROP TABLE IF EXISTS user_data;
 
 ---
 --- create tables
@@ -42,6 +43,12 @@ CREATE TABLE cards (
     status_id   INTEGER             NOT NULL,
     title       VARCHAR (200)       NOT NULL,
     card_order  INTEGER            NOT NULL
+);
+
+CREATE TABLE user_data (
+    id            SERIAL      PRIMARY KEY NOT NULL,
+    user_name     VARCHAR(30) UNIQUE      NOT NULL,
+    password_hash bytea                   NOT NULL
 );
 
 ---
@@ -68,6 +75,8 @@ INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 2, 'in progress card', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 3, 'planning', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 2);
+
+INSERT INTO user_data VALUES (nextval('user_data_id_seq'), 'Luna', '$2b$12$DyfPmIuSdrSpU3S11XLztuLCES94rv5SJcMeUmTK58rFKXzgQZg76');
 
 ---
 --- add constraints
