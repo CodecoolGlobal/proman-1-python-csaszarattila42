@@ -23,6 +23,15 @@ def get_statuses():
     return queries.get_statuses()
 
 
+@app.route("/api/statuses/<int:column_id>", methods=["PUT"])
+@json_response
+def update_column_name(column_id):
+    if request.method == "PUT":
+        title = request.json['title']
+        queries.update_column_name(column_id, title)
+        return {}, 200
+
+
 @app.route("/api/boards")
 @json_response
 def get_boards():

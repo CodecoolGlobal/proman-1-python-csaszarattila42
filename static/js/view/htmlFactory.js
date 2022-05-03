@@ -71,7 +71,8 @@ function columnBuilder(column,boardId) {
         .addClasses("board-column")
         .addDataAttributes({
             "columnTitle": `${column.title}`,
-            "boardId": `${boardId}`
+            "boardId": `${boardId}`,
+            "columnId": `${column.id}`
         })
         .addText(`${column.title}`)
         .addChild(document.createElement("div"))
