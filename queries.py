@@ -117,3 +117,15 @@ def get_user_id(user_name):
     if user_id is None:
         raise KeyError('user not found')
     return user_id["id"]
+
+
+def get_password_hash(user_id):
+    query = """
+    SELECT
+        u.password_hash
+    FROM 
+        user_data u
+    WHERE
+        u.id = %(user_id)s
+    """
+    return data_manager.execute_select(query, {'user_id': user_id}, False)
