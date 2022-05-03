@@ -3,7 +3,7 @@ import data_manager
 
 def get_statuses():
     statuses = data_manager.execute_select(
-        """SELECT id, title FROM statuses"""
+        """SELECT id, title FROM statuses ORDER BY id;"""
     )
     return statuses
 
@@ -101,3 +101,15 @@ def delete_board(board_id):
     delete = """DELETE FROM boards WHERE id = %(board_id)s
     """
     data_manager.execute_delete(delete, {'board_id': board_id})
+
+
+def update_column_name(column_id, title):
+    update = data_manager.execute_update(
+        """
+        UPDATE statuses
+        SET title = %(title)s
+        WHERE id = %(column_id)s
+        """
+        , {"column_id": column_id, "title": title}
+    )
+    return update
