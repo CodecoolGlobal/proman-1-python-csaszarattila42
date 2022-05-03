@@ -6,9 +6,11 @@ export let cardsManager = {
     loadCards: async function (boardId) {
         const cards = await dataHandler.getCardsByBoardId(boardId);
         console.log(`board id: ${boardId}`)
-        const column = document.querySelector(`.board-column[data-board-id="${boardId}"]`);
-        console.log(column);
+
         for (let card of cards) {
+            const columSelector = 
+                `.board-column[data-board-id="${boardId}"][data-column-id="${card.status_id}"]`;
+            const column = document.querySelector(columSelector);
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
             content.setAttribute("data-board-id", `${boardId}`);
