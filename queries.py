@@ -113,3 +113,17 @@ def update_column_name(column_id, title):
         , {"column_id": column_id, "title": title}
     )
     return update
+
+
+def update_card(card):
+    update = """
+        UPDATE cards SET
+            board_id = %(board_id)s, 
+            status_id = %(status_id)s,
+            title = %(title)s,
+            card_order = %(card_order)s
+        WHERE
+            id = %(id)s
+    """
+    data_manager.execute_update(update, card)
+
