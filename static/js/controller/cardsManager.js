@@ -28,5 +28,5 @@ function deleteButtonHandler(clickEvent) {
     let cardId = clickEvent.target.dataset.cardId;
     let boardId = clickEvent.target.parentElement.parentElement.dataset.boardId;
     console.log(boardId);
-    dataHandler.deleteCard(boardId, cardId).then(() => domManager.refreshPage());
+    dataHandler.deleteCard(boardId, cardId).then(() => domManager.refreshPage(boardId));
 }
