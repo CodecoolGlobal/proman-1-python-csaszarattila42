@@ -28,8 +28,9 @@ export let boardsManager = {
             const statusBuilder = htmlFactory(htmlTemplates.column);
             const content = statusBuilder(status, boardId);
             domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
+            domManager.addEventListener( `.board-column[data-board-id="${boardId}"][data-column-id="${status.id}"]`, "click", boardsManager.updateColumnName);
         }
-        domManager.addEventListener(`.board-title[data-board-id="${boardId}"]`, "click", boardsManager.updateName);
+        domManager.addEventListener(`.board-title[data-board-id="${boardId}"]`, "click", boardsManager.updateBoardName);
         domManager.addEventListener(`button[data-board-id="${boardId}"]`, "click", deleteBoard);
     },
     initNewItemEventHandlers: function () {
@@ -38,11 +39,19 @@ export let boardsManager = {
         document.querySelector("#new-board-save").addEventListener('click', newBoardHandler);
 
     },
-    updateName: function (clickEvent) {
+    updateBoardName: function (clickEvent) {
         const boardId = clickEvent.target.getAttribute("data-board-id")
         domManager.updateName(boardId);
         domManager.addEventListener(`.button[data-button-id="save"]`, "click", saveNewName);
-    }
+    },
+
+    updateColumnName: function (clickEvent) {
+    const columnId = clickEvent.target.getAttribute("data-column-id")
+    const boardId = clickEvent.target.getAttribute("data-board-id")
+    domManager.updateColumnName(columnId, boardId);
+    domManager.addEventListener(`.button[data-button-id="save-column"]`, "click", saveNewColumnName);
+    },
+
 };
 
 
@@ -84,7 +93,7 @@ function saveNewName() {
     const saveButton = document.querySelector(`.button[data-button-id="save"]`);
     let boardId = saveButton.getAttribute("id");
     let newName = document.getElementById("textbox");
-    dataHandler.updateName(boardId, newName.value).then(() => {domManager.refreshPage()})
+    dataHandler.updateBoardName(boardId, newName.value).then(() => {domManager.refreshPage()})
 
 
 }
@@ -105,4 +114,13 @@ function newBoardHandler(clickEvent) {
         .then(() => {
             domManager.refreshPage()
         });
+}
+
+function saveNewColumnName() {
+    const saveButton = document.querySelector(`.button[data-button-id="save-column"]`);
+    let columnId = saveButton.getAttribute("id");
+    let newName = document.getElementById("textbox-column");
+    dataHandler.updateColumnName(columnId, newName.value).then(() => {domManager.refreshPage()})
+
+
 }

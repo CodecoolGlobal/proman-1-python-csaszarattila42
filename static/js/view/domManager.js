@@ -40,6 +40,27 @@ export let domManager = {
         boardName.innerText = "";
     },
 
+        updateColumnName(elemId, boardId) {
+        console.log(elemId)
+        let columnName = document.querySelector(`.board-column[data-board-id="${boardId}"][data-column-id="${elemId}"]`);
+        let textDiv = new HtmlElementBuilder('div')
+            .addClasses('update-container')
+            .addChild(new HtmlElementBuilder("textarea")
+                .addAttribute("id", "textbox-column")
+                .addText(columnName.innerText)
+            ) //text box
+            .addChild(new HtmlElementBuilder('button')
+                .addClasses('button')
+                .addDataAttributes({buttonId: 'save-column'})
+                .addAttribute('id', elemId)
+                .addText('Save')
+            ) //save button
+            .element
+
+        columnName.parentElement.replaceChild(textDiv, columnName)
+        columnName.innerText = "";
+    },
+
 
     replaceChild(parentIdentifier, oldChild, childContent) {
         const parent = document.querySelector(parentIdentifier);
@@ -64,5 +85,15 @@ export let domManager = {
                 button.innerText = "Show Cards";
     }
         });
+        boardsManager.loadBoards();
+    },
+    loadingStart: function() {
+        const elem = document.createElement('div');
+        elem.id = "loading";
+        elem.innerText = 'loading...';
+        document.body.append(elem);
+    },
+    loadingEnd: function() {
+        document.getElementById('loading')?.remove?.();
     }
 };

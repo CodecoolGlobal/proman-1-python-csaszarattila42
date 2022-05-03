@@ -46,6 +46,7 @@ section.board{
     border: aliceblue;
     background: #ffffff90;
     border-radius: 3px;
+    display: flex;
 }
 
 .board-header{
@@ -141,4 +142,10 @@ section.board{
 
 .board-column{
     display: inline-block;
+}
+
+#loading {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
