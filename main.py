@@ -1,4 +1,5 @@
 from flask import Flask, render_template, url_for, request, session
+import bcrypt
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
@@ -71,6 +72,19 @@ def update_board_name(board_id):
 @json_response
 def delete_card(board_id, card_id):
     queries.delete_card(board_id, card_id)
+
+
+@app.route("/api/users/login")
+def log_user_in():
+    try:
+        user_id = queries.get_user_id(request.json["user_name"])
+        password_bytes = request.json["password"].encode('utf-8')
+        if bcrypt.checkpw(password_bytes, queries.get_password_hash(user_id)):
+            session["user_id"] = user_id
+            session["user_name"] = request.json["user_name"]
+            return {"result": "successful"}, 200
+    finally:
+        return {"result": "unsuccessful"}, 200
 
 
 def main():
