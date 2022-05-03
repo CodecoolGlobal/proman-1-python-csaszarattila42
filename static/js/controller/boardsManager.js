@@ -6,18 +6,20 @@ import {cardsManager} from "./cardsManager.js";
 export let boardsManager = {
     loadBoards: async function () {
         const boards = await dataHandler.getBoards();
+        const cardPromises = []
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
-            this.loadStatus(board.id).then(() => cardsManager.loadCards(board.id));
+            await this.loadStatus(board.id);
+            cardPromises.push(cardsManager.loadCards(board.id))
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click",
                 showHideButtonHandler
             );
-
         }
+        await Promise.all(cardPromises)
     },
     loadStatus: async function (boardId) {
         const statuses = await dataHandler.getStatuses();
@@ -57,8 +59,6 @@ function showHideButtonHandler(clickEvent) {
     let boardId = clickEvent.target.dataset.boardId;
     let button = document.querySelector(`.toggle-board-button[data-board-id="${boardId}"]`);
     let board = document.querySelector(`section[data-board-id="${boardId}"]`)
-    console.log(board)
-    console.log(board.querySelectorAll("div.card"))
     board.querySelectorAll("div.card").forEach((card) => {
         card.classList.toggle("hidden")
     });
@@ -80,7 +80,7 @@ function showStatuses(clickEvent) {
 function saveNewCardHandler(clickEvent) {
     let boardId = clickEvent.target.dataset.boardId;
     let newCardTitle = document.querySelector('#new-card-title').value;
-    dataHandler.createNewCard(newCardTitle, boardId).then(() => {domManager.refreshPage()});
+    dataHandler.createNewCard(newCardTitle, boardId).then(() => {domManager.refreshPage(boardId)});
 }
 
 function newCardModalHandler(clickEvent) {

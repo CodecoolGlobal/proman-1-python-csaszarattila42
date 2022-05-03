@@ -70,8 +70,21 @@ export let domManager = {
             console.error("could not find such html element: " + parentIdentifier);
         }
     },
-    refreshPage: function () {
+    refreshPage: function (boardId) {
         document.querySelector('#root').innerHTML = '';
+        boardsManager.loadBoards().then(() => {
+            let button = document.querySelector(`.toggle-board-button[data-board-id="${boardId}"]`);
+            let board = document.querySelector(`section[data-board-id="${boardId}"]`);
+            console.log(board.querySelectorAll("div.card"))
+            board.querySelectorAll("div.card").forEach((card) => {
+                card.classList.toggle("hidden")
+            });
+            if (button.innerText === "Show Cards") {
+                button.innerText = "Hide Cards";
+            } else {
+                button.innerText = "Show Cards";
+    }
+        });
         boardsManager.loadBoards();
     },
     loadingStart: function() {

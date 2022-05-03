@@ -69,9 +69,9 @@ function onDrop(event) {
 }
 
 function deleteButtonHandler(clickEvent) {
-  console.log("CLICK");
-  let cardId = clickEvent.target.dataset.cardId;
-  let boardId = clickEvent.target.parentElement.parentElement.dataset.boardId;
-  console.log(boardId);
-  dataHandler.deleteCard(boardId, cardId).then(() => domManager.refreshPage());
+    console.log("CLICK");
+    let cardId = clickEvent.target.dataset.cardId;
+    let boardId = clickEvent.target.parentElement.parentElement.dataset.boardId;
+    console.log(boardId);
+    dataHandler.deleteCard(boardId, cardId).then(() => domManager.refreshPage(boardId));
 }
