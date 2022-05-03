@@ -21,80 +21,111 @@ export function htmlFactory(template) {
         return "";
     };
 }
-function columnBuilder(column,boardId) {
 
-    let colum = document.createElement("div");
-    let columnTitle = document.createElement("div");
-    let columnContent = document.createElement("div");
-    colum.appendChild(columnContent);
-    columnTitle.classList.add("board-column-title");
-    colum.appendChild(columnTitle);
-    colum.classList.add("board-column");
-    colum.setAttribute("data-column-title",`${column.title}`)
-    colum.setAttribute("data-board-id", `${boardId}`)
-    colum.innerText=`${column.title}`
-    return colum
+export class HtmlElementBuilder {
+    #element;
+
+    constructor(tagName) {
+        this.#element = document.createElement(tagName);
+    }
+
+    addClasses(classes) {
+        classes.split(" ").forEach(cssClass => this.element.classList.add(cssClass));
+        return this;
+    }
+
+    addDataAttributes(attributes) {
+        for (const [attributeName, attributeValue] of Object.entries(attributes)) {
+            this.element.dataset[attributeName] = attributeValue;
+        }
+
+        return this;
+    }
+
+    addAttribute(attributeName, attributeValue) {
+        this.element.setAttribute(attributeName, attributeValue);
+        return this;
+    }
+
+    addChild(child) {
+        if (child instanceof HtmlElementBuilder) {
+            this.element.appendChild(child.element);
+        } else {
+            this.element.appendChild(child);
+        }
+        return this;
+    }
+
+    addText(text) {
+        this.addChild(document.createTextNode(text));
+        return this;
+    }
+
+    get element() {
+        return this.#element;
+    }
 }
-function boardBuilder(board) {
-    let boardContainer = document.createElement("div");
-    let cardBoard = document.createElement("section");
-    let title = document.createElement("span");
-    let showButton = document.createElement("button");
-    let boardHeader = document.createElement("div");
-    let deleteButton = document.createElement('button');
-    boardContainer.appendChild(title);
-    boardContainer.appendChild(deleteButton);
-    boardContainer.setAttribute("class", "board-container");
-    boardContainer.appendChild(cardBoard);
-    cardBoard.setAttribute("class","board" );
-    cardBoard.setAttribute("data-board-id",`${board.id}`);
-    cardBoard.appendChild(boardHeader);
-    title.setAttribute("data-board-id", `${board.id}`)
-    deleteButton.setAttribute("board-id", `${board.id}`)
-    deleteButton.innerText = " 🗑️ ";
-    title.classList.add("board-title");
-    title.innerText=`${board.title}`;
-    boardContainer.appendChild(showButton);
-    showButton.innerText = "Show Cards";
-    showButton.setAttribute("class", "toggle-board-button");
-    showButton.setAttribute("data-board-id", `${board.id}`);
-    let newCardButton = createNewCardButtonBuilder(board);
 
-    boardContainer.appendChild(newCardButton);
-    //button.setAttribute("class", "toggle-board-button")
-    //button.setAttribute("data-board-id", `${board.id}`)
-    return boardContainer;
-    /*return `<div class="board-container">
-                <div class="board" data-board-id=${board.id}><h5>${board.title}</h5></div>
-                <button class="toggle-board-button" data-board-id="${board.id}">Show Cards</button>
-            </div>`;*/
+function columnBuilder(column,boardId) {
+    return new HtmlElementBuilder('div')
+        .addClasses("board-column")
+        .addDataAttributes({
+            "columnTitle": `${column.title}`,
+            "boardId": `${boardId}`
+        })
+        .addText(`${column.title}`)
+        .addChild(document.createElement("div"))
+        .addChild(new HtmlElementBuilder('div')
+            .addClasses("board-column-title")
+        )
+        .element
+}
+
+function boardBuilder(board) {
+    return new HtmlElementBuilder("div")
+        .addClasses("board-container")
+        .addChild(new HtmlElementBuilder("span")
+            .addClasses("board-title")
+            .addDataAttributes({boardId: `${board.id}`})
+            .addText(`${board.title}`)
+        ) //title
+        .addChild(new HtmlElementBuilder("button")
+            .addDataAttributes({boardId: `${board.id}`})
+            .addText(" 🗑️ ")
+        ) //delete button
+        .addChild(new HtmlElementBuilder("section")
+            .addClasses("board")
+            .addDataAttributes({boardId: `${board.id}`})
+            .addChild(document.createElement("div")) //board header
+        ) //card board
+        .addChild(new HtmlElementBuilder("button")
+            .addClasses("toggle-board-button")
+            .addDataAttributes({boardId: `${board.id}`})
+            .addText("Show Cards")
+        ) //show button
+        .addChild(new HtmlElementBuilder("button")
+            .addClasses("btn btn-primary")
+            .addDataAttributes({
+                boardId: `${board.id}`,
+                bsToggle: "modal",
+                bsTarget: "#new-card-modal"
+            })
+            .addText("Create Card")
+        ) //new card button
+        .element
 }
 
 function cardBuilder(card) {
-    let cardDom = document.createElement("div");
-    let cardRemove = document.createElement("div");
-    let trash = document.createElement("i")
-    cardRemove.classList.add("card-remove")
-    trash.setAttribute("class", "bi bi-trash");
-    trash.setAttribute("data-card-id",`${card.id}`);
-    cardRemove.appendChild(trash);
-    cardDom.setAttribute("class", "card");
-    cardDom.classList.add("hidden");
-    cardDom.setAttribute("data-card-id",`${card.id}`);
-    cardDom.innerText=`${card.title}`;
-    cardDom.appendChild(cardRemove)
-    return cardDom;
-    //return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
+    return new HtmlElementBuilder("div")
+        .addClasses("card hidden")
+        .addDataAttributes({cardId: `${card.id}`})
+        .addText(`${card.title}`)
+        .addChild(new HtmlElementBuilder("div")
+            .addClasses("card-remove")
+            .addChild(new HtmlElementBuilder("i")
+                .addClasses("bi bi-trash")
+                .addDataAttributes({cardId: `${card.id}`})
+            ) //trash
+        ) //card remove
+        .element
 }
-
-
-function createNewCardButtonBuilder(board) {
-    let newCardButton = document.createElement("button")
-    newCardButton.setAttribute("class", "btn btn-primary");
-    newCardButton.setAttribute("data-board-id",`${board.id}`);
-    newCardButton.setAttribute("data-bs-toggle","modal");
-    newCardButton.setAttribute("data-bs-target","#new-card-modal");
-    newCardButton.innerText = "Create Card"
-    return newCardButton;
-}
-
