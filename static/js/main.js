@@ -1,6 +1,6 @@
 import {boardsManager} from "./controller/boardsManager.js";
 import {dataHandler} from "./data/dataHandler.js";
-import {domManager} from "./view/domManager";
+import {domManager} from "./view/domManager.js";
 
 function init() {
     boardsManager.loadBoards();
