@@ -35,6 +35,10 @@ export let dataHandler = {
     deleteBoardById: async function (elemId) {
         return await apiDelete(`/api/board/${elemId}`)
     },
+    deleteColumnById: async function (elemId) {
+        let data = {'columnId': elemId}
+        return await apiDelete(`/api/statuses/${elemId}`, data)
+    },
     updateColumnName: async function (elemId, name) {
         let data =  {'columnId': elemId, 'title': name }
         return await apiPut(`/api/statuses/${elemId}`, data)

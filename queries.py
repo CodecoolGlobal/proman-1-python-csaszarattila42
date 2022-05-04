@@ -61,6 +61,7 @@ def update_board_name(board_id, name):
     )
     return update
 
+
 def get_board_by_id(id):
     """
     Gather all boards
@@ -84,6 +85,16 @@ def create_new_card_for_board(board_id, title):
 def delete_card(board_id, id):
     query = """DELETE FROM cards WHERE id = %(id)s AND board_id = %(board_id)s"""
     data_manager.execute_delete(query, {'id': id, 'board_id': board_id})
+
+
+def delete_column(id):
+    query = """DELETE FROM statuses WHERE id = %(id)s"""
+    data_manager.execute_delete(query, {'id': id})
+
+
+def delete_card_by_columnId(status_id):
+    query = """DELETE FROM cards WHERE status_id = %(status_id)s"""
+    data_manager.execute_delete(query, {'status_id': status_id})
 
 
 def create_board(board_title):
@@ -126,4 +137,3 @@ def update_card(card):
             id = %(id)s
     """
     data_manager.execute_update(update, card)
-

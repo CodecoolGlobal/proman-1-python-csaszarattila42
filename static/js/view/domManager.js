@@ -41,7 +41,7 @@ export let domManager = {
     },
 
         updateColumnName(elemId, boardId) {
-        console.log(elemId)
+        //console.log(elemId)
         let columnName = document.querySelector(`.board-column[data-board-id="${boardId}"][data-column-id="${elemId}"]`);
         let textDiv = new HtmlElementBuilder('div')
             .addClasses('update-container')
@@ -91,9 +91,22 @@ export let domManager = {
             console.error("could not find such html element: " + parentIdentifier);
         }
     },
-    refreshPage: function () {
+    refreshPage: function (boardId) {
         document.querySelector('#root').innerHTML = '';
-        boardsManager.loadBoards();
+        boardsManager.loadBoards().then(() => {
+            let button = document.querySelector(`.toggle-board-button[data-board-id="${boardId}"]`);
+            let board = document.querySelector(`section[data-board-id="${boardId}"]`);
+            console.log(board.querySelectorAll("div.card"))
+            board.querySelectorAll("div.card").forEach((card) => {
+                card.classList.toggle("hidden")
+            });
+            if (button.innerText === "Show Cards") {
+                button.innerText = "Hide Cards";
+            } else {
+                button.innerText = "Show Cards";
+    }
+        });
+        //boardsManager.loadBoards();
     },
     loadingStart: function() {
         const elem = document.createElement('div');

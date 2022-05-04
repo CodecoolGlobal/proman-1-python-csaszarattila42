@@ -75,6 +75,11 @@ function columnBuilder(column,boardId) {
             "columnId": `${column.id}`
         })
         .addText(`${column.title}`)
+        .addChild(new HtmlElementBuilder("button")
+            .addClasses("bi bi-trash")
+            .addDataAttributes({boardId: `${boardId}`, columnId: `${column.id}`})
+            )
+
         .addChild(document.createElement("div"))
         .addChild(new HtmlElementBuilder('div')
             .addClasses("board-column-title")

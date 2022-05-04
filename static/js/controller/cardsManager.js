@@ -7,7 +7,7 @@ let dragged = null;
 export let cardsManager = {
   loadCards: async function (boardId) {
     const cards = await dataHandler.getCardsByBoardId(boardId);
-    console.log(`board id: ${boardId}`);
+    //console.log(`board id: ${boardId}`);
 
     for (let card of cards) {
       const columnSelector = `.board-column[data-board-id="${boardId}"][data-column-id="${card.status_id}"]`;
@@ -83,7 +83,7 @@ function deleteButtonHandler(clickEvent) {
   let cardId = clickEvent.target.dataset.cardId;
   let boardId = clickEvent.target.parentElement.parentElement.dataset.boardId;
   console.log(boardId);
-  dataHandler.deleteCard(boardId, cardId).then(() => domManager.refreshPage());
+  dataHandler.deleteCard(boardId, cardId).then(() => domManager.refreshPage(boardId));
   clickEvent.stopPropagation()
 }
 
@@ -96,6 +96,4 @@ function saveNewCardName(clickEvent) {
     let statusId = saveButton.dataset.statusId;
     let cardOrder = saveButton.dataset.cardOrder;
     dataHandler.updateCard(cardId, cardTitle, boardId, statusId, cardOrder).then(() => {domManager.refreshPage()})
-
-
 }
