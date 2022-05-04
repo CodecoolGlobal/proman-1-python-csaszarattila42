@@ -69,7 +69,7 @@ export let domManager = {
             .element
         );
     },
-    switchToLoggedOut: function (loginHandler, registrationHandler) {
+    switchToLoggedOut: function () {
         const userDiv = document.querySelector("#user-operations");
         userDiv.innerHTML = '';
         userDiv.appendChild(new HtmlElementBuilder('button')
@@ -80,7 +80,6 @@ export let domManager = {
             .addAttribute("id", "register-button")
             .addAttribute('type', 'button')
             .addText('Register')
-            .addEventListener('click', registrationHandler)
             .element
         )
         userDiv.appendChild(new HtmlElementBuilder('button')
@@ -91,7 +90,6 @@ export let domManager = {
             .addAttribute("id", "login-button")
             .addAttribute('type', 'button')
             .addText('Login')
-            .addEventListener('click', loginHandler)
             .element
         )
     }

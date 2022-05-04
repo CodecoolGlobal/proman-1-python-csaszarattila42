@@ -6,7 +6,13 @@ function init() {
     boardsManager.loadBoards();
     boardsManager.initNewItemEventHandlers();
 
-    domManager.switchToLoggedOut(loginHandler, registrationHandler);
+    initLoginLogoutHandlers();
+    domManager.switchToLoggedOut();
+}
+
+function initLoginLogoutHandlers() {
+    //domManager.addEventListener("#register-modal-button", "click", registrationHandler);
+    domManager.addEventListener("#login-modal-button", "click", loginHandler);
 }
 
 function loginHandler(clickEvent) {
