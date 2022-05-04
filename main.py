@@ -86,7 +86,9 @@ def log_user_in():
             session["user_id"] = user_id
             session["user_name"] = request.json["user_name"]
             return {"result": "successful"}, 200
-    finally:
+        else:
+            return {"result": "unsuccessful"}, 200
+    except KeyError:
         return {"result": "unsuccessful"}, 200
 
 
