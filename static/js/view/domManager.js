@@ -56,6 +56,7 @@ export let domManager = {
     switchToLoggedIn: function(userName, logoutHandler) {
         const userDiv = document.querySelector("#user-operations");
         userDiv.innerHTML = '';
+        userDiv.dataset.userName = userName;
         userDiv.appendChild(new HtmlElementBuilder('span')
             .addText(`Logged in as ${userName}`)
             .element
@@ -72,6 +73,7 @@ export let domManager = {
     switchToLoggedOut: function () {
         const userDiv = document.querySelector("#user-operations");
         userDiv.innerHTML = '';
+        //delete userDiv.dataset.userName;
         userDiv.appendChild(new HtmlElementBuilder('button')
             .addClasses("btn btn-secondary btn-sm")
             .addDataAttributes({
@@ -94,5 +96,9 @@ export let domManager = {
             .addText('Login')
             .element
         )
+    },
+    isUserLoggedIn: function () {
+        const userDiv = document.querySelector("#user-operations");
+        return userDiv.dataset.userName === '';
     }
 };
