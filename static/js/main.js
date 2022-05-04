@@ -7,7 +7,11 @@ function init() {
     boardsManager.initNewItemEventHandlers();
 
     initLoginLogoutHandlers();
-    domManager.switchToLoggedOut();
+    if (domManager.isUserLoggedIn()) {
+        domManager.switchToLoggedOut();
+    } else {
+        domManager.switchToLoggedIn(logOutHandler)
+    }
 }
 
 function initLoginLogoutHandlers() {
