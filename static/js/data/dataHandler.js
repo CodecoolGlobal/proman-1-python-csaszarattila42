@@ -34,6 +34,12 @@ export let dataHandler = {
     },
     deleteBoardById: async function (elemId) {
         return await apiDelete(`/api/board/${elemId}`)
+    },
+    logUserIn: async function (userName, password) {
+        return await apiPost('api/users/login', {
+            'user_name': userName,
+            'password': password
+        });
     }
 };
 
