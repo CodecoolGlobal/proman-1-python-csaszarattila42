@@ -76,7 +76,8 @@ def delete_card(board_id, card_id):
     queries.delete_card(board_id, card_id)
 
 
-@app.route("/api/users/login")
+@app.route("/api/users/login", methods=["POST"])
+@json_response
 def log_user_in():
     try:
         user_id = queries.get_user_id(request.json["user_name"])
