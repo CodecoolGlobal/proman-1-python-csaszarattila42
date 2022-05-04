@@ -52,5 +52,47 @@ export let domManager = {
     refreshPage: function () {
         document.querySelector('#root').innerHTML = '';
         boardsManager.loadBoards();
+    },
+    switchToLoggedIn: function(userName, logoutHandler) {
+        const userDiv = document.querySelector("#user-operations");
+        userDiv.innerHTML = '';
+        userDiv.appendChild(new HtmlElementBuilder('span')
+            .addText(`Logged in as ${userName}`)
+            .element
+        );
+        userDiv.appendChild(new HtmlElementBuilder('button')
+            .addClasses("btn")
+            .addAttribute("id", "logout-button")
+            .addAttribute('type', 'button')
+            .addText('Logout')
+            .addEventListener("click", logoutHandler)
+            .element
+        );
+    },
+    switchToLoggedOut: function (loginHandler, registrationHandler) {
+        const userDiv = document.querySelector("#user-operations");
+        userDiv.innerHTML = '';
+        userDiv.appendChild(new HtmlElementBuilder('button')
+            .addDataAttributes({
+                bsTarget: '#register-modal',
+                bsToggle: 'modal'
+            })
+            .addAttribute("id", "register-button")
+            .addAttribute('type', 'button')
+            .addText('Register')
+            .addEventListener('click', registrationHandler)
+            .element
+        )
+        userDiv.appendChild(new HtmlElementBuilder('button')
+            .addDataAttributes({
+                bsTarget: '#login-modal',
+                bsToggle: 'modal'
+            })
+            .addAttribute("id", "login-button")
+            .addAttribute('type', 'button')
+            .addText('Login')
+            .addEventListener('click', loginHandler)
+            .element
+        )
     }
 };
