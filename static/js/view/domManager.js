@@ -61,6 +61,27 @@ export let domManager = {
         columnName.innerText = "";
     },
 
+    updateCardName(elemId, boardId, columnId) {
+        console.log(elemId)
+        let card = document.querySelector(`.card[data-card-id="${elemId}"]`);
+        let textDiv = new HtmlElementBuilder('div')
+            .addClasses('update-container')
+            .addChild(new HtmlElementBuilder("textarea")
+                .addAttribute("id", "textbox-card")
+                .addText(card.innerText)
+            ) //text box
+            .addChild(new HtmlElementBuilder('button')
+                .addClasses('button')
+                .addDataAttributes({cardId: elemId, boardId: card.dataset.boardId, cardOrder: card.dataset.cardOrder, statusId: card.dataset.columnId})
+                .addAttribute('id', 'save-card-name')
+                .addText('Save')
+            ) //save button
+            .element
+
+        card.parentElement.replaceChild(textDiv, card)
+        card.innerText = "";
+    },
+
 
     replaceChild(parentIdentifier, oldChild, childContent) {
         const parent = document.querySelector(parentIdentifier);

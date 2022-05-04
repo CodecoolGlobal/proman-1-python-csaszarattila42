@@ -124,7 +124,7 @@ function boardBuilder(board) {
 function cardBuilder(card) {
     return new HtmlElementBuilder("div")
         .addClasses("card hidden")
-        .addDataAttributes({cardId: `${card.id}`})
+        .addDataAttributes({cardId: `${card.id}`, columnId: `${card.status_id}`, cardOrder: `${card.card_order}`})
         .addText(`${card.title}`)
         .addChild(new HtmlElementBuilder("div")
             .addClasses("card-remove")

@@ -46,11 +46,13 @@ export let boardsManager = {
     },
 
     updateColumnName: function (clickEvent) {
-    const columnId = clickEvent.target.getAttribute("data-column-id")
-    const boardId = clickEvent.target.getAttribute("data-board-id")
-    domManager.updateColumnName(columnId, boardId);
-    domManager.addEventListener(`.button[data-button-id="save-column"]`, "click", saveNewColumnName);
-    }
+        if(clickEvent.target.classList.contains("board-column")){
+            const columnId = clickEvent.currentTarget.getAttribute("data-column-id")
+            const boardId = clickEvent.currentTarget.getAttribute("data-board-id")
+            domManager.updateColumnName(columnId, boardId);
+            domManager.addEventListener(`.button[data-button-id="save-column"]`, "click", saveNewColumnName);
+        }
+    },
 };
 
 

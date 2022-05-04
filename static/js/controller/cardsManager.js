@@ -2,10 +2,7 @@ import { dataHandler } from "../data/dataHandler.js";
 import { htmlFactory, htmlTemplates } from "../view/htmlFactory.js";
 import { domManager } from "../view/domManager.js";
 
-const dragged = {
-    element: null,
-    info: {}
-};
+let dragged = null;
 
 export let cardsManager = {
   loadCards: async function (boardId) {
@@ -13,8 +10,8 @@ export let cardsManager = {
     //console.log(`board id: ${boardId}`);
 
     for (let card of cards) {
-      const columSelector = `.board-column[data-board-id="${boardId}"][data-column-id="${card.status_id}"]`;
-      const column = document.querySelector(columSelector);
+      const columnSelector = `.board-column[data-board-id="${boardId}"][data-column-id="${card.status_id}"]`;
+      const column = document.querySelector(columnSelector);
       const cardBuilder = htmlFactory(htmlTemplates.card);
       const content = cardBuilder(card);
       content.dataset.boardId = boardId;
@@ -23,11 +20,13 @@ export let cardsManager = {
       domManager.addEventListener(
         `.bi.bi-trash[data-card-id="${card.id}"]`,
         "click",
-        deleteButtonHandler
+        deleteButtonHandler,
       );
 
+      domManager.addEventListener(`.card[data-card-id="${card.id}"]`, "click", cardsManager.updateCardName);
+
       content.addEventListener("dragstart", (e) => {
-          onDragStart(e, { ...card });
+          onDragStart(e);
       });
 
       content.addEventListener("dragend", onDragEnd);
@@ -39,11 +38,19 @@ export let cardsManager = {
       column.addEventListener("drop", onDrop);
     });
   },
+    updateCardName: function (clickEvent) {
+    const card = clickEvent.currentTarget;
+    const cardId = card.getAttribute("data-card-id");
+    const boardId = card.getAttribute("data-board-id");
+    const columnId = card.getAttribute("data-column-id");
+    domManager.updateCardName(cardId, boardId, columnId);
+    domManager.addEventListener("#save-card-name", "click", saveNewCardName);
+    clickEvent.stopPropagation();
+    },
 };
 
-function onDragStart(event, info) {
-  dragged.element = event.currentTarget;
-  dragged.info = info;
+function onDragStart(event) {
+  dragged = event.currentTarget;
   console.log(event.currentTarget);
 }
 
@@ -52,25 +59,41 @@ function onDragOver(event) {
 }
 
 function onDragEnd() {
-  dragged.element = null;
-  dragged.info = {};
+  dragged = null;
 }
 
 function onDrop(event) {
     const column = event.currentTarget;
-    const { element, info } = dragged;
-    info.status_id = column.dataset.columnId;
-
+    const element = dragged;
+    element.dataset.columnId = column.dataset.columnId;
     column.append(element);
+    const cardId = element.dataset.cardId;
+    const cardTitle = element.innerText;
+    const boardId = element.dataset.boardId;
+    const statusId = element.dataset.columnId;
+    const cardOrder = element.dataset.cardOrder;
     domManager.loadingStart();
-    dataHandler.updateCard(info.id, info).then(() => {
+    dataHandler.updateCard(cardId, cardTitle, boardId, statusId, cardOrder).then(() => {
         domManager.loadingEnd();
     });
 }
 
 function deleteButtonHandler(clickEvent) {
-    let cardId = clickEvent.target.dataset.cardId;
-    let boardId = clickEvent.target.parentElement.parentElement.dataset.boardId;
-    console.log(boardId);
-    dataHandler.deleteCard(boardId, cardId).then(() => domManager.refreshPage(boardId));
+  console.log("CLICK");
+  let cardId = clickEvent.target.dataset.cardId;
+  let boardId = clickEvent.target.parentElement.parentElement.dataset.boardId;
+  console.log(boardId);
+  dataHandler.deleteCard(boardId, cardId).then(() => domManager.refreshPage(boardId));
+  clickEvent.stopPropagation()
+}
+
+function saveNewCardName(clickEvent) {
+    const saveButton = clickEvent.currentTarget;
+    let cardId = saveButton.dataset.cardId;
+    let newName = document.querySelector("#textbox-card");
+    let cardTitle = newName.value;
+    let boardId = saveButton.dataset.boardId;
+    let statusId = saveButton.dataset.statusId;
+    let cardOrder = saveButton.dataset.cardOrder;
+    dataHandler.updateCard(cardId, cardTitle, boardId, statusId, cardOrder).then(() => {domManager.refreshPage()})
 }
