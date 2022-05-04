@@ -82,6 +82,13 @@ def delete_card(board_id, card_id):
     queries.delete_card(board_id, card_id)
 
 
+@app.route("/api/statuses/<int:column_id>", methods=["DELETE"])
+@json_response
+def delete_column(column_id):
+    queries.delete_card_by_columnId(column_id)
+    queries.delete_column(column_id)
+
+
 @app.route("/api/cards/<int:card_id>", methods=["PUT"])
 @json_response
 def update_card(card_id):
