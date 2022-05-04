@@ -39,16 +39,17 @@ export let dataHandler = {
         let data =  {'columnId': elemId, 'title': name }
         return await apiPut(`/api/statuses/${elemId}`, data)
     },
-    updateCard: async function(cardId, card) {
-        const data = {
-            board_id: card.board_id,
-            status_id: card.status_id,
-            card_order: card.card_order,
-            title: card.title,
-            id: cardId,
-        };
 
-        return apiPut(`/api/cards/${cardId}`, data);
+    updateCard: async function(cardId, cardTitle, boardId, statusId, cardOrder) {
+    const data = {
+        title: cardTitle,
+        id: cardId,
+        board_id: boardId,
+        status_id: statusId,
+        card_order: cardOrder,
+    };
+
+    return apiPut(`/api/cards/${cardId}`, data);
     }
 };
 
