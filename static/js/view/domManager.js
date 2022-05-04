@@ -53,10 +53,12 @@ export let domManager = {
         document.querySelector('#root').innerHTML = '';
         boardsManager.loadBoards();
     },
-    switchToLoggedIn: function(userName, logoutHandler) {
+    switchToLoggedIn: function(logoutHandler, userName) {
         const userDiv = document.querySelector("#user-operations");
         userDiv.innerHTML = '';
-        userDiv.dataset.userName = userName;
+        if (userName) {
+            userDiv.dataset.userName = userName;
+        }
         userDiv.appendChild(new HtmlElementBuilder('span')
             .addText(`Logged in as ${userName}`)
             .element
@@ -73,7 +75,7 @@ export let domManager = {
     switchToLoggedOut: function () {
         const userDiv = document.querySelector("#user-operations");
         userDiv.innerHTML = '';
-        //delete userDiv.dataset.userName;
+        userDiv.dataset.userName = '';
         userDiv.appendChild(new HtmlElementBuilder('button')
             .addClasses("btn btn-secondary btn-sm")
             .addDataAttributes({
