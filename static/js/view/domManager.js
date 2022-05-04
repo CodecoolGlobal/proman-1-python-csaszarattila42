@@ -41,7 +41,7 @@ export let domManager = {
     },
 
         updateColumnName(elemId, boardId) {
-        console.log(elemId)
+        //console.log(elemId)
         let columnName = document.querySelector(`.board-column[data-board-id="${boardId}"][data-column-id="${elemId}"]`);
         let textDiv = new HtmlElementBuilder('div')
             .addClasses('update-container')
@@ -85,7 +85,7 @@ export let domManager = {
                 button.innerText = "Show Cards";
     }
         });
-        boardsManager.loadBoards();
+        //boardsManager.loadBoards();
     },
     loadingStart: function() {
         const elem = document.createElement('div');

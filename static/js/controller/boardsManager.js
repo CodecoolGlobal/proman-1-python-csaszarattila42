@@ -23,12 +23,12 @@ export let boardsManager = {
     },
     loadStatus: async function (boardId) {
         const statuses = await dataHandler.getStatuses();
-        console.log(statuses)
         for (let status of statuses) {
             const statusBuilder = htmlFactory(htmlTemplates.column);
             const content = statusBuilder(status, boardId);
             domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
             domManager.addEventListener( `.board-column[data-board-id="${boardId}"][data-column-id="${status.id}"]`, "click", boardsManager.updateColumnName);
+            domManager.addEventListener(`button[data-board-id="${boardId}"][data-column-id="${status.id}"]`, "click", deleteColumn);
         }
         domManager.addEventListener(`.board-title[data-board-id="${boardId}"]`, "click", boardsManager.updateBoardName);
         domManager.addEventListener(`button[data-board-id="${boardId}"]`, "click", deleteBoard);
@@ -50,8 +50,7 @@ export let boardsManager = {
     const boardId = clickEvent.target.getAttribute("data-board-id")
     domManager.updateColumnName(columnId, boardId);
     domManager.addEventListener(`.button[data-button-id="save-column"]`, "click", saveNewColumnName);
-    },
-
+    }
 };
 
 
@@ -96,6 +95,16 @@ function saveNewName() {
     dataHandler.updateBoardName(boardId, newName.value).then(() => {domManager.refreshPage()})
 
 
+}
+
+function deleteColumn(clickEvent) {
+    console.log('Click delete column')
+    const columnId = clickEvent.target.dataset.columnId;
+    dataHandler.deleteColumnById(columnId)
+        .then(() => {
+            domManager.refreshPage()
+        });
+    console.log(columnId)
 }
 
 function deleteBoard(clickEvent) {
