@@ -95,6 +95,13 @@ def log_user_in():
         return {"result": "unsuccessful"}
 
 
+@app.route("/api/users/logout")
+@json_response
+def log_user_out():
+    session.clear()
+    return {}
+
+
 def main():
     app.run(debug=True)
 
