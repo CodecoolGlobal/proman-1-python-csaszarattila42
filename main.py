@@ -85,11 +85,11 @@ def log_user_in():
         if bcrypt.checkpw(password_bytes, queries.get_password_hash(user_id)):
             session["user_id"] = user_id
             session["user_name"] = request.json["user_name"]
-            return {"result": "successful"}, 200
+            return {"result": "successful"}
         else:
-            return {"result": "unsuccessful"}, 200
+            return {"result": "unsuccessful"}
     except KeyError:
-        return {"result": "unsuccessful"}, 200
+        return {"result": "unsuccessful"}
 
 
 def main():
