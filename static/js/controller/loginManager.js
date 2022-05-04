@@ -31,5 +31,8 @@ function registrationHandler(clickEvent) {
 }
 
 export function logOutHandler(clickEvent) {
-    ;
+    dataHandler.logUserOut().then(() => {
+        domManager.switchToLoggedOut()
+        domManager.refreshPage()
+    });
 }

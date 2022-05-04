@@ -40,6 +40,9 @@ export let dataHandler = {
             'user_name': userName,
             'password': password
         });
+    },
+    logUserOut: async function() {
+        await apiGet('api/users/logout')
     }
 };
 
