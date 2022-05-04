@@ -61,6 +61,11 @@ export class HtmlElementBuilder {
         return this;
     }
 
+    addEventListener(eventName, eventHandler) {
+        this.element.addEventListener(eventName, eventHandler)
+        return this;
+    }
+
     get element() {
         return this.#element;
     }
