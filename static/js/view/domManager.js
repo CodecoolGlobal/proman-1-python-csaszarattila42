@@ -61,7 +61,7 @@ export let domManager = {
             .element
         );
         userDiv.appendChild(new HtmlElementBuilder('button')
-            .addClasses("btn")
+            .addClasses("btn btn-secondary btn-sm")
             .addAttribute("id", "logout-button")
             .addAttribute('type', 'button')
             .addText('Logout')
@@ -73,6 +73,7 @@ export let domManager = {
         const userDiv = document.querySelector("#user-operations");
         userDiv.innerHTML = '';
         userDiv.appendChild(new HtmlElementBuilder('button')
+            .addClasses("btn btn-secondary btn-sm")
             .addDataAttributes({
                 bsTarget: '#register-modal',
                 bsToggle: 'modal'
@@ -83,6 +84,7 @@ export let domManager = {
             .element
         )
         userDiv.appendChild(new HtmlElementBuilder('button')
+            .addClasses("btn btn-primary btn-sm")
             .addDataAttributes({
                 bsTarget: '#login-modal',
                 bsToggle: 'modal'
