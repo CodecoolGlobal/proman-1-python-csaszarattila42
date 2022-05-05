@@ -1,0 +1,12 @@
+{% extends "modal-skeleton.html" %}
+{% block modal_id %}board-creation-modal{% endblock %}
+{% block modal_title %}New Board{% endblock %}
+{% block modal_content %}
+<form>
+  <label for="board-creation-title">Title: </label>
+  <input type="text" id="board-creation-title"><br>
+  <input type="checkbox" id="board-creation-private">
+  <label for="board-creation-modal-form-container">Private</label>
+</form>
+{% endblock %}
+{% block modal_footer %}<button type="button" id="new-board-save" class="btn btn-primary" data-bs-dismiss="modal">Save</button>{% endblock %}
