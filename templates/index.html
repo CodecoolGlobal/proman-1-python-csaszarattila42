@@ -38,26 +38,6 @@
         <div id="root"></div>
         {% include "new_card_modal.html" %}
         {% include "board-creation-modal.html" %}
-    <div class="modal fade" id="login-modal" tabindex="-1">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Login</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body" id="login-modal-form-container">
-                  <form>
-                      <label for="login-modal-username-text" class="form-label">User name: </label>
-                      <input type="text" id="login-modal-username-text" class="form-control">
-                      <label for="login-modal-password-text" class="form-label">Password: </label>
-                      <input type="password" id="login-modal-password-text" class="form-control">
-                  </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" id="login-modal-button" class="btn btn-primary" data-bs-dismiss="modal">Login</button>
-              </div>
-            </div>
-          </div>
-    </div>
+        {% include "login-modal.html" %}
     </body>
 </html>
