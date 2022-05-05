@@ -71,6 +71,7 @@ def get_board_by_id(id):
         """
         SELECT * FROM boards
         WHERE boards.id = %(id)s
+        ORDER BY id
         ;
         """
     )
