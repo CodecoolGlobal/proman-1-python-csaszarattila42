@@ -1,0 +1,12 @@
+{% extends "modal-skeleton.html" %}
+{% block modal_id %}login-modal{% endblock %}
+{% block modal_title %}Login{% endblock %}
+{% block modal_content %}
+<form>
+  <label for="login-modal-username-text" class="form-label">User name: </label>
+  <input type="text" id="login-modal-username-text" class="form-control">
+  <label for="login-modal-password-text" class="form-label">Password: </label>
+  <input type="password" id="login-modal-password-text" class="form-control">
+</form>
+{% endblock %}
+{% block modal_footer %}<button type="button" id="login-modal-button" class="btn btn-primary" data-bs-dismiss="modal">Login</button>{% endblock %}
