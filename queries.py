@@ -137,3 +137,32 @@ def update_card(card):
             id = %(id)s
     """
     data_manager.execute_update(update, card)
+
+
+def get_user_id(user_name):
+    query = """
+    SELECT
+        u.id
+    FROM
+        user_data u
+    WHERE
+        u.user_name = %(user_name)s
+    """
+
+    user_id = data_manager.execute_select(query, {'user_name': user_name}, False)
+    if user_id is None:
+        raise KeyError('user not found')
+    return user_id["id"]
+
+
+def get_password_hash(user_id):
+    query = """
+    SELECT
+        u.password_hash
+    FROM 
+        user_data u
+    WHERE
+        u.id = %(user_id)s
+    """
+    password_view = data_manager.execute_select(query, {'user_id': user_id}, False)["password_hash"]
+    return bytes(password_view)

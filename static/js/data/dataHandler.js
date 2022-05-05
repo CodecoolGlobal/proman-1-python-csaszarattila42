@@ -54,6 +54,15 @@ export let dataHandler = {
     };
 
     return apiPut(`/api/cards/${cardId}`, data);
+    },
+    logUserIn: async function (userName, password) {
+        return await apiPost('api/users/login', {
+            'user_name': userName,
+            'password': password
+        });
+    },
+    logUserOut: async function() {
+        await apiGet('api/users/logout')
     }
 };
 

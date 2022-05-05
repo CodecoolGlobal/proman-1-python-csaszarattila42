@@ -1,4 +1,6 @@
 from flask import Flask, render_template, url_for, request, session
+import bcrypt
+import os
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
@@ -6,6 +8,7 @@ import queries
 
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
+app.secret_key = os.urandom(16)
 load_dotenv()
 
 
@@ -14,7 +17,10 @@ def index():
     """
     This is a one-pager which shows all the boards and cards
     """
-    return render_template('index.html')
+    return render_template(
+        'index.html',
+        username=session.get('user_name')
+    )
 
 
 @app.route("/api/statuses")
@@ -96,6 +102,30 @@ def update_card(card_id):
     body['id'] = card_id
     queries.update_card(body)
     return {}, 200
+
+
+@app.route("/api/users/login", methods=["POST"])
+@json_response
+def log_user_in():
+    try:
+        user_id = queries.get_user_id(request.json["user_name"])
+        password_bytes = request.json["password"].encode('utf-8')
+        if bcrypt.checkpw(password_bytes, queries.get_password_hash(user_id)):
+            session["user_id"] = user_id
+            session["user_name"] = request.json["user_name"]
+            return {"result": "successful"}
+        else:
+            return {"result": "unsuccessful"}
+    except KeyError:
+        return {"result": "unsuccessful"}
+
+
+@app.route("/api/users/logout")
+@json_response
+def log_user_out():
+    session.clear()
+    return {}
+
 
 def main():
     app.run(debug=True)
