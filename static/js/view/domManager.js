@@ -116,7 +116,7 @@ export let domManager = {
     },
     loadingEnd: function() {
         document.getElementById('loading')?.remove?.();
-        boardsManager.loadBoards();
+        //boardsManager.loadBoards();
     },
     switchToLoggedIn: function(logoutHandler, userName) {
         const userDiv = document.querySelector("#user-operations");
