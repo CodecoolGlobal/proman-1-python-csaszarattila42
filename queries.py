@@ -3,7 +3,7 @@ import data_manager
 
 def get_statuses():
     statuses = data_manager.execute_select(
-        """SELECT id, title FROM statuses"""
+        """SELECT id, title FROM statuses ORDER BY id;"""
     )
     return statuses
 
@@ -61,6 +61,7 @@ def update_board_name(board_id, name):
     )
     return update
 
+
 def get_board_by_id(id):
     """
     Gather all boards
@@ -86,6 +87,16 @@ def delete_card(board_id, id):
     data_manager.execute_delete(query, {'id': id, 'board_id': board_id})
 
 
+def delete_column(id):
+    query = """DELETE FROM statuses WHERE id = %(id)s"""
+    data_manager.execute_delete(query, {'id': id})
+
+
+def delete_card_by_columnId(status_id):
+    query = """DELETE FROM cards WHERE status_id = %(status_id)s"""
+    data_manager.execute_delete(query, {'status_id': status_id})
+
+
 def create_board(board_title):
     data_manager.execute_insert(
         """
@@ -101,6 +112,31 @@ def delete_board(board_id):
     delete = """DELETE FROM boards WHERE id = %(board_id)s
     """
     data_manager.execute_delete(delete, {'board_id': board_id})
+
+
+def update_column_name(column_id, title):
+    update = data_manager.execute_update(
+        """
+        UPDATE statuses
+        SET title = %(title)s
+        WHERE id = %(column_id)s
+        """
+        , {"column_id": column_id, "title": title}
+    )
+    return update
+
+
+def update_card(card):
+    update = """
+        UPDATE cards SET
+            board_id = %(board_id)s, 
+            status_id = %(status_id)s,
+            title = %(title)s,
+            card_order = %(card_order)s
+        WHERE
+            id = %(id)s
+    """
+    data_manager.execute_update(update, card)
 
 
 def get_user_id(user_name):

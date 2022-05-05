@@ -76,9 +76,15 @@ function columnBuilder(column,boardId) {
         .addClasses("board-column")
         .addDataAttributes({
             "columnTitle": `${column.title}`,
-            "boardId": `${boardId}`
+            "boardId": `${boardId}`,
+            "columnId": `${column.id}`
         })
         .addText(`${column.title}`)
+        .addChild(new HtmlElementBuilder("button")
+            .addClasses("bi bi-trash")
+            .addDataAttributes({boardId: `${boardId}`, columnId: `${column.id}`})
+            )
+
         .addChild(document.createElement("div"))
         .addChild(new HtmlElementBuilder('div')
             .addClasses("board-column-title")
@@ -123,7 +129,7 @@ function boardBuilder(board) {
 function cardBuilder(card) {
     return new HtmlElementBuilder("div")
         .addClasses("card hidden")
-        .addDataAttributes({cardId: `${card.id}`})
+        .addDataAttributes({cardId: `${card.id}`, columnId: `${card.status_id}`, cardOrder: `${card.card_order}`})
         .addText(`${card.title}`)
         .addChild(new HtmlElementBuilder("div")
             .addClasses("card-remove")

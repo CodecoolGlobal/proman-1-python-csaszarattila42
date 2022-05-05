@@ -29,6 +29,15 @@ def get_statuses():
     return queries.get_statuses()
 
 
+@app.route("/api/statuses/<int:column_id>", methods=["PUT"])
+@json_response
+def update_column_name(column_id):
+    if request.method == "PUT":
+        title = request.json['title']
+        queries.update_column_name(column_id, title)
+        return {}, 200
+
+
 @app.route("/api/boards")
 @json_response
 def get_boards():
@@ -77,6 +86,22 @@ def update_board_name(board_id):
 @json_response
 def delete_card(board_id, card_id):
     queries.delete_card(board_id, card_id)
+    return {}, 200
+
+
+@app.route("/api/statuses/<int:column_id>", methods=["DELETE"])
+@json_response
+def delete_column(column_id):
+    queries.delete_card_by_columnId(column_id)
+    queries.delete_column(column_id)
+
+
+@app.route("/api/cards/<int:card_id>", methods=["PUT"])
+def update_card(card_id):
+    body = request.get_json()
+    body['id'] = card_id
+    queries.update_card(body)
+    return {}, 200
 
 
 @app.route("/api/users/login", methods=["POST"])

@@ -6,28 +6,31 @@ import {cardsManager} from "./cardsManager.js";
 export let boardsManager = {
     loadBoards: async function () {
         const boards = await dataHandler.getBoards();
+        const cardPromises = []
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
-            this.loadStatus(board.id).then(() => cardsManager.loadCards(board.id));
+            await this.loadStatus(board.id);
+            cardPromises.push(cardsManager.loadCards(board.id))
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click",
                 showHideButtonHandler
             );
-
         }
+        await Promise.all(cardPromises)
     },
     loadStatus: async function (boardId) {
         const statuses = await dataHandler.getStatuses();
-        console.log(statuses)
         for (let status of statuses) {
             const statusBuilder = htmlFactory(htmlTemplates.column);
             const content = statusBuilder(status, boardId);
             domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
+            domManager.addEventListener( `.board-column[data-board-id="${boardId}"][data-column-id="${status.id}"]`, "click", boardsManager.updateColumnName);
+            domManager.addEventListener(`button[data-board-id="${boardId}"][data-column-id="${status.id}"]`, "click", deleteColumn);
         }
-        domManager.addEventListener(`.board-title[data-board-id="${boardId}"]`, "click", boardsManager.updateName);
+        domManager.addEventListener(`.board-title[data-board-id="${boardId}"]`, "click", boardsManager.updateBoardName);
         domManager.addEventListener(`button[data-board-id="${boardId}"]`, "click", deleteBoard);
     },
     initNewItemEventHandlers: function () {
@@ -36,11 +39,20 @@ export let boardsManager = {
         document.querySelector("#new-board-save").addEventListener('click', newBoardHandler);
 
     },
-    updateName: function (clickEvent) {
+    updateBoardName: function (clickEvent) {
         const boardId = clickEvent.target.getAttribute("data-board-id")
         domManager.updateName(boardId);
         domManager.addEventListener(`.button[data-button-id="save"]`, "click", saveNewName);
-    }
+    },
+
+    updateColumnName: function (clickEvent) {
+        if(clickEvent.target.classList.contains("board-column")){
+            const columnId = clickEvent.currentTarget.getAttribute("data-column-id")
+            const boardId = clickEvent.currentTarget.getAttribute("data-board-id")
+            domManager.updateColumnName(columnId, boardId);
+            domManager.addEventListener(`.button[data-button-id="save-column"]`, "click", saveNewColumnName);
+        }
+    },
 };
 
 
@@ -48,8 +60,6 @@ function showHideButtonHandler(clickEvent) {
     let boardId = clickEvent.target.dataset.boardId;
     let button = document.querySelector(`.toggle-board-button[data-board-id="${boardId}"]`);
     let board = document.querySelector(`section[data-board-id="${boardId}"]`)
-    console.log(board)
-    console.log(board.querySelectorAll("div.card"))
     board.querySelectorAll("div.card").forEach((card) => {
         card.classList.toggle("hidden")
     });
@@ -71,7 +81,7 @@ function showStatuses(clickEvent) {
 function saveNewCardHandler(clickEvent) {
     let boardId = clickEvent.target.dataset.boardId;
     let newCardTitle = document.querySelector('#new-card-title').value;
-    dataHandler.createNewCard(newCardTitle, boardId).then(() => {domManager.refreshPage()});
+    dataHandler.createNewCard(newCardTitle, boardId).then(() => {domManager.refreshPage(boardId)});
 }
 
 function newCardModalHandler(clickEvent) {
@@ -84,9 +94,19 @@ function saveNewName() {
     const saveButton = document.querySelector(`.button[data-button-id="save"]`);
     let boardId = saveButton.getAttribute("id");
     let newName = document.getElementById("textbox");
-    dataHandler.updateName(boardId, newName.value).then(() => {domManager.refreshPage()})
+    dataHandler.updateBoardName(boardId, newName.value).then(() => {domManager.refreshPage()})
 
 
+}
+
+function deleteColumn(clickEvent) {
+    console.log('Click delete column')
+    const columnId = clickEvent.target.dataset.columnId;
+    dataHandler.deleteColumnById(columnId)
+        .then(() => {
+            domManager.refreshPage()
+        });
+    console.log(columnId)
 }
 
 function deleteBoard(clickEvent) {
@@ -105,4 +125,13 @@ function newBoardHandler(clickEvent) {
         .then(() => {
             domManager.refreshPage()
         });
+}
+
+function saveNewColumnName() {
+    const saveButton = document.querySelector(`.button[data-button-id="save-column"]`);
+    let columnId = saveButton.getAttribute("id");
+    let newName = document.getElementById("textbox-column");
+    dataHandler.updateColumnName(columnId, newName.value).then(() => {domManager.refreshPage()})
+
+
 }
