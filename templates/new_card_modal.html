@@ -1,0 +1,8 @@
+{% extends "modal-skeleton.html" %}
+{% block modal_id %}new-card-modal{% endblock %}
+{% block modal_title %}New Card{% endblock %}
+{% block modal_content %}
+    <label for="new-card-title">Add Title:</label>
+    <input type="text" placeholder="Card Title" id="new-card-title" required>
+{% endblock %}
+{% block modal_footer %}<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="save-new-card">Save Card</button>{% endblock %}
